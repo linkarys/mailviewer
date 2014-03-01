@@ -1,0 +1,85 @@
+<div class="row">
+	<form class="form-horizontal" role="form">
+		<div class="form-group">
+			<span class="action-bar">
+				<img src="/CFIDE/administrator/images/irefresh.gif" onclick="refresh()" alt="refresh" title="refresh" class="btn">
+				<img src="/CFIDE/administrator/images/delete_button.gif" onclick="deleteList()" alt="delete" title="delete" class="btn">
+				<img src="/CFIDE/administrator/images/ipurge.gif" alt="delete all" onclick="deleteAll()"	title="delete all" class="btn">
+				<img src="/CFIDE/administrator/images/irestart.gif" alt="reprocess" title="reprocess" class="btn">
+			</span>
+
+			<cfoutput>
+				<span class="page-toolkit">
+					<a href="" id="prev-page" class="page-action">prev</a>
+					<a href="" id="next-page" class="page-action">next</a>
+					<!-- <span id="page-marker">#request.udf.getPageTookit(variables.qryMail.recordCount)#</span> -->
+<!-- 					<select name="perpage" id="perpage">
+						<option value="50" #request.udf.isSelected(50)#>50</option>
+						<option value="100" #request.udf.isSelected(100)#>100</option>
+						<option value="200" #request.udf.isSelected(200)#>200</option>
+					</select> -->
+				</span>
+			</cfoutput>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-6">
+				<input ng-model="query" class="form-control" id="search-box" placeholder="search keyword">
+			</div>
+			<div class="col-sm-6">
+				<label for="sort-by" class="col-sm-8 control-label">Sort by</label>
+				<div class="col-sm-4">
+					<select ng-model="orderProp" class="form-control" id="sort-by">
+						<option value="SUBJECT">Subject</option>
+						<option value="FROM">Sender</option>
+						<option value="TO">To</option>
+						<option value="DATELASTMODIFIED">Newest</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="row">
+	<table class="table table-responsive phones">
+		<thead>
+			<tr class="table-header">
+				<!--- <th>check</th> --->
+				<!--- <th nowrap><input type="checkbox" id='check-all'>Action</th> --->
+				<th class="subject">Subject</th>
+				<th class="sender">Sender</th>
+				<th class="to">To</th>
+				<!--- <th class="size">Size</th> --->
+				<th class="date" nowrap>Date</th>
+			</tr>
+		</thead>
+		<tr ng-repeat="mail in mails | filter:query | orderBy:orderProp" class="mail-listing">
+<!--- 	 			<td nowrap>
+				<input type="checkbox" class="single-box" name="#name#">
+				<img src="/CFIDE/administrator/images/delete_button.gif" onclick="deleteEmail('#urlEncodedFormat(name)#', this)" alt="delete" title="delete" class="btn">
+			</td> --->
+			<td class="subject">
+				{{mail.SUBJECT | formatName}}
+				<a class="read-more" ng-click="cls='mail-body-show'" ng-init="cls='mail-body-hide'">read more</a>
+				<div class="{{cls}}">
+					{{mail.BODY}}
+					<a class="read-less" ng-click="cls='mail-body-hide'">read less</a>
+				</div>
+			</td>
+			<td>{{mail.FROM}}</td>
+			<td>{{mail.TO}}</td>
+			<!--- <td>{{mail.SIZE}}</td> --->
+			<td nowrap>{{mail.DATELASTMODIFIED | formatDate}}</td>
+		</tr>
+
+ 	</table>
+ 	<script>
+ 		function readMore(e) {
+ 			e.preventDefault();
+ 			console.log('ok');
+ 		}
+ 		console.log($('.read-more'));
+ 		$('.read-more').on('click', function(e) {
+ 			console.log('ok');
+ 		});
+ 	</script>
+ </div>

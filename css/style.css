@@ -1,0 +1,52 @@
+.wrapper {padding: 10px; font-family: Arial, Helvetica, sans-serif;color: #666;}
+
+/* Actions */
+.btn {cursor: pointer;}
+.action-bar {position: relative; top: 2px; left: 12px}
+.action-bar .refresh {background: url('/CFIDE/administrator/images/irefresh.gif'); background-size: 16px 15px;}
+.action-bar .delete {background: url('/CFIDE/administrator/images/delete_button.gif'); background-size: 16px 15px;}
+.action-bar .delete-all {background: url('/CFIDE/administrator/images/ipurge.gif'); background-size: 16px 15px;}
+.action-bar .reprocess {background: url('/CFIDE/administrator/images/irestart.gif'); background-size: 16px 15px;}
+
+/* Table */
+th, td {vertical-align: top;}
+th {padding: 4px;}
+td {padding: 2px 4px; font-size: 12px}
+
+.main-content {width: 100%;	border-collapse:collapse;}
+.main-content th, .main-content td{border-bottom: 1px solid #d5e3e6;}
+.table-header {background-color: #e2e6e7;}
+.table-highlight {background-color: #f3f7f7;}
+.clickable {cursor: pointer;}
+.clickable:hover {background-color: #f3f7e3}
+.action {width: 5%}
+.subject {width: 35%;}
+.sender {width: 17%;}
+.to {width: 29%;}
+.size {width: 5%;}
+.date {width: 10%; white-space: nowrap;}
+.splitline {border-bottom: solid 1px #ccc;}
+
+#eviewer {
+	width: 700px;
+	position: fixed;
+	background: #fff;
+	opacity: 0;
+	overflow: auto;
+	height: 790px;
+	top: 65px;
+	right: -1000px;
+	padding: 5px;
+	border: 1px solid #ccc;
+	transition: 0.5s opacity, 0.2s right;
+	-webkit-transition: 0.5s opacity, 0.2s right;
+	-moz-transition: 0.5s opacity, 0.2s right;
+	-o-transition: 0.5s opacity, 0.2s right;
+}
+
+.page-header {margin: 0 0 2px 0; padding-bottom: 2px; border-bottom: solid 2px #ccc;}
+.title {font-size: large; font-weight: bold;}
+.page-toolkit {float: right; }
+.page-action {text-decoration: none; color: #728FCE;}
+.page-action:hover {color: #6CD;}
+#toolkit-info {display: none;}

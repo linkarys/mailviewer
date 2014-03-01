@@ -1,0 +1,37 @@
+table {
+	font-size: 1em;
+}
+
+.container {
+	margin-top: 20px;
+}
+
+.mail-body-show {
+/*	opacity: 1;
+	-webkit-transition: .5s;
+	height: ;
+	visibility: visible;*/
+	display: block;
+}
+
+.mail-body-hide {
+/*	opacity: 0;
+	height: 0;
+	-webkit-transition: .5s;
+	visibility: hidden;*/
+	display: none;
+}
+
+.read-less,
+.read-more {
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.subject {
+	max-width: 300px;
+}
+
+form {
+	margin: 0 auto;
+}
