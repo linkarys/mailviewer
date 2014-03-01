@@ -10,33 +10,9 @@
 			<cfscript>
 				startRow = udf.getStartRow(url);
 				maxrows = udf.getMaxRows(url);
-				qryMail = udf.getMailList();
-
-				qryService = new query(sql='SELECT * FROM qryMail', dbtype="query", qryMail = qryMail, startrow="#startRow#", maxrows="#maxRows#");
-				qryResult = qryService.execute().getResult();
-				aryID = ArrayNew(1);
-				arySubject = ArrayNew(1);
-				aryFrom = ArrayNew(1);
-				aryTo = ArrayNew(1);
-				aryBody = ArrayNew(1);
-
-				for(i = 1; i lte qryResult.recordCount; i=i+1) {
-					mail = udf.getMail(qryResult.name[i], true);
-					arrayAppend(aryID, i);
-					arrayAppend(arySubject, mail.subject);
-					arrayAppend(aryFrom, mail.From);
-					arrayAppend(aryTo, mail.To);
-					arrayAppend(aryBody, mail.Body);
-				}
-
-				QueryAddColumn(qryResult, 'id', 'varchar', aryID);
-				QueryAddColumn(qryResult, 'subject', 'varchar', arySubject);
-				QueryAddColumn(qryResult, 'from', 'varchar', aryFrom);
-				QueryAddColumn(qryResult, 'to', 'varchar', aryTo);
-				QueryAddColumn(qryResult, 'body', 'varchar', aryBody);
+				qryMail = udf.getMails(startRow, maxrows);
+				writeOutput(serializeJSON(qryMail));
 			</cfscript>
-
-			<cfoutput>#serializeJSON(qryResult)#</cfoutput>
 		</cfcase>
 		<cfcase value="show">
 			<cfoutput>
@@ -67,7 +43,7 @@
 			</cftry>
 		</cfcase>
 		<cfcase value="nextPage">
-			<cfset qryMail = request.udf.getMailList()>
+			<cfset qryMail = udf.getMailList()>
 			<cfset toTalPage = ceiling(qryMail.recordCount / session.perPage)>
 			<cfif session.currentPage lt toTalPage>
 				<cfset session.currentPage += 1>

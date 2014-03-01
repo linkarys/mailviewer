@@ -1,5 +1,3 @@
-'use strict';
-
 /* Controllers */
 
 var mailControllers = angular.module('mailControllers', [])
@@ -11,11 +9,11 @@ var mailControllers = angular.module('mailControllers', [])
 			$scope.orderProp = 'DATELASTMODIFIED';
 		}
 	])
-	.controller('mailDetailCtrl', ['$scope', '$routeParams', '$http', 'Mail',
-		function($scope, $routeParams, $http, $Mail) {
+	.controller('mailDetailCtrl', ['$scope', '$routeParams', '$http', 'Mail', '$sce',
+		function($scope, $routeParams, $http, $Mail, $sce) {
 
 			$http.get('controller.cfm?action=show&mail=' + $routeParams.mailId).success(function(data) {
-				$scope.mail = data;
+				$scope.mail = $sce.trustAHtml(data);
 			});
 
 			// function($scope, $routeParams, $Mail) {

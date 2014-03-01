@@ -54,8 +54,36 @@ component output="false" displayname=""  {
 		return parsedEmail;
 	}
 
-	public query function getMailList() {
+	public query function getFileList() {
 		return directoryList(application.maildir, false, "query", "*.cfmail", "datelastmodified desc");
+	}
+
+	public query function getMails(numeric startRow, numeric maxRows) {
+		var qryFile = getFileList();
+		var qryService = new query(sql='SELECT * FROM qryFile', dbtype="query", qryFile = qryFile, startrow="#startRow#", maxrows="#maxRows#");
+		var qryResult = qryService.execute().getResult();
+		var aryID = ArrayNew(1);
+		var arySubject = ArrayNew(1);
+		var aryFrom = ArrayNew(1);
+		var aryTo = ArrayNew(1);
+		var aryBody = ArrayNew(1);
+
+		for(i = 1; i lte qryResult.recordCount; i=i+1) {
+			mail = getMail(qryResult.name[i], true);
+			arrayAppend(aryID, i);
+			arrayAppend(arySubject, mail.subject);
+			arrayAppend(aryFrom, mail.From);
+			arrayAppend(aryTo, mail.To);
+			arrayAppend(aryBody, mail.Body);
+		}
+
+		QueryAddColumn(qryResult, 'id', 'varchar', aryID);
+		QueryAddColumn(qryResult, 'subject', 'varchar', arySubject);
+		QueryAddColumn(qryResult, 'from', 'varchar', aryFrom);
+		QueryAddColumn(qryResult, 'to', 'varchar', aryTo);
+		QueryAddColumn(qryResult, 'body', 'varchar', aryBody);
+
+		return qryResult;
 	}
 
 	public function isSelected(current) {

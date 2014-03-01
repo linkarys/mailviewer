@@ -1,5 +1,3 @@
-'use strict';
-
 /* App Module */
 
 angular.module('mailApp', [
@@ -7,6 +5,7 @@ angular.module('mailApp', [
 	'mailControllers',
 	'mailFilters',
 	'mailAnimations',
+	'ngSanitize',
 	'mailServices'
 	])
 	.config(['$routeProvider',

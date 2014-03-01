@@ -29,7 +29,20 @@ table {
 }
 
 .subject {
-	max-width: 300px;
+	/*max-width: 300px;*/
+}
+
+.title {
+
+}
+
+.date,
+.to {
+	margin-left: 5px;
+}
+
+.exceptions {
+	margin-top: 5px;
 }
 
 form {

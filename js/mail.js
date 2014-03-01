@@ -18,9 +18,8 @@ function deleteAll() {
 	})
 }
 
-$('#prev-page').click(function(e) {
-	e.preventDefault();
-	$listWrapper.fadeOut();
+
+function nextPage(e) {
 	$.ajax({
 		url: baseUrl,
 		data: {
@@ -33,7 +32,8 @@ $('#prev-page').click(function(e) {
 			$pageMarker.html($($.parseHTML(data)).find('#toolkit-info').html());
 		}
 	})
-})
+}
+
 
 $('#next-page').click(function(e) {
 	e.preventDefault();

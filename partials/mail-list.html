@@ -10,8 +10,8 @@
 
 			<cfoutput>
 				<span class="page-toolkit">
-					<a href="" id="prev-page" class="page-action">prev</a>
-					<a href="" id="next-page" class="page-action">next</a>
+					<a href="" id="prev-page" class="page-action" onclick="prePage()">prev</a>
+					<a href="" id="next-page" class="page-action" onclick="nextPage()">next</a>
 					<!-- <span id="page-marker">#request.udf.getPageTookit(variables.qryMail.recordCount)#</span> -->
 <!-- 					<select name="perpage" id="perpage">
 						<option value="50" #request.udf.isSelected(50)#>50</option>
@@ -46,10 +46,10 @@
 				<!--- <th>check</th> --->
 				<!--- <th nowrap><input type="checkbox" id='check-all'>Action</th> --->
 				<th class="subject">Subject</th>
-				<th class="sender">Sender</th>
-				<th class="to">To</th>
+<!-- 				<th class="sender">Sender</th>
+				<th class="to">To</th> -->
 				<!--- <th class="size">Size</th> --->
-				<th class="date" nowrap>Date</th>
+				<!-- <th class="date" nowrap>Date</th> -->
 			</tr>
 		</thead>
 		<tr ng-repeat="mail in mails | filter:query | orderBy:orderProp" class="mail-listing">
@@ -58,28 +58,27 @@
 				<img src="/CFIDE/administrator/images/delete_button.gif" onclick="deleteEmail('#urlEncodedFormat(name)#', this)" alt="delete" title="delete" class="btn">
 			</td> --->
 			<td class="subject">
-				{{mail.SUBJECT | formatName}}
-				<a class="read-more" ng-click="cls='mail-body-show'" ng-init="cls='mail-body-hide'">read more</a>
-				<div class="{{cls}}">
-					{{mail.BODY}}
-					<a class="read-less" ng-click="cls='mail-body-hide'">read less</a>
-				</div>
+				<span ng-class="count ? 'glyphicon-collapse-down' : 'glyphicon-expand'" class="glyphicon read-more" ng-click="count=(count + 1) % 2" ng-init="count=0"></span>
+				<span class="title">{{mail.SUBJECT | formatName}}</span>
+				<span class="subject-detail">
+					<span class="label label-default to">To: {{mail.TO}}</span>
+					<span class="label label-default date">{{mail.DATELASTMODIFIED | formatDate}}</span>
+					<div ng-class="count ? 'mail-body-show' : 'mail-body-hide'" class="alert alert-info exceptions">
+						<div ng-bind-html="mail.BODY"></div>
+						<a class="read-less" ng-click="count=0"><span class="glyphicon glyphicon-chevron-up"></span> collapse</a>
+					</div>
+				</span>
 			</td>
-			<td>{{mail.FROM}}</td>
-			<td>{{mail.TO}}</td>
+<!-- 			<td>{{mail.FROM}}</td>
+			<td>{{mail.TO}}</td> -->
 			<!--- <td>{{mail.SIZE}}</td> --->
-			<td nowrap>{{mail.DATELASTMODIFIED | formatDate}}</td>
+			<!-- <td nowrap>{{mail.DATELASTMODIFIED | formatDate}}</td> -->
 		</tr>
 
  	</table>
- 	<script>
- 		function readMore(e) {
- 			e.preventDefault();
- 			console.log('ok');
- 		}
- 		console.log($('.read-more'));
- 		$('.read-more').on('click', function(e) {
- 			console.log('ok');
- 		});
- 	</script>
+<!-- 	<ul class="pager">
+		<li><a href="#">Previous</a></li>
+		<li><a href="#">Next</a></li>
+	</ul> -->
+
  </div>

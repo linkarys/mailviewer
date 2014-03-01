@@ -11,6 +11,7 @@
 	<script src="js/jquery.min.js"></script>
 	<script src="js/readmore.min.js"></script>
 	<script src="js/angular.min.js"></script>
+	<script src="js/angular-sanitize.min.js"></script>
 	<script src="js/angular-resource.js"></script>
 	<script src="js/angular-route.js"></script>
 	<script src="js/app.js"></script>
@@ -19,8 +20,8 @@
 	<script src="js/angular-animate.js"></script>
 	<script src="js/animate.js"></script>
 	<script src="js/services.js"></script>
-	<script src="js/mail.js"></script>
 	<script src="js/dump.min.js"></script>
+	<script src="js/mail.js"></script>
 </head>
 <body >
 	<div class="view-container container">
