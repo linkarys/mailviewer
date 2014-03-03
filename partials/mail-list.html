@@ -40,7 +40,7 @@
 				<!-- <span class="label label-default to">To: {{mail.TO}}</span> -->
 				<span class="label label-default date">{{mail.DATELASTMODIFIED | formatDate}}</span>
 				<div ng-class="count ? 'show' : 'hide'" class="alert alert-info exceptions">
-					<div ng-bind-html="mail.BODY" class="mail-body"></div>
+					<div ng-bind-html="mail.BODY" class="body"></div>
 					<a class="collapse-btn" ng-click="count=0"><span class="glyphicon glyphicon-chevron-up"></span> collapse</a>
 				</div>
 			</span>
