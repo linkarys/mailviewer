@@ -6,72 +6,60 @@ body {
 	color: #555;
 }
 
-.action-pane {
-	margin-bottom: 25px;
-}
 
+/* mail */
 
-.mail-body {
-	margin-bottom: 9px;
-	.show {
-		display: block;
+.mail {
+	&.listing {
+		min-height: 600px;
+	}
+	.date {
+		float: right;
 	}
 
-	.hide {
-		display: none;
+	li {
+		border-bottom: 1px solid #ccc;
+		margin-bottom: 10px;
 	}
-}
 
-.pagination a {
-	cursor: pointer;
-}
+	.body {
+		margin-bottom: 9px;
+		.show {
+			display: block;
+		}
 
-.read-less {
-	color: #333;
-	padding: 2px 8px;
-	background-color: #dfe8e5;
-	&:hover {
+		.hide {
+			display: none;
+		}
+	}
+
+	.action-pane {
+		margin-bottom: 25px;
+	}
+
+	.action-btn {
+		color: #ddd;
+		cursor: pointer;
+		&:hover {
+			color: #9dd6c5;
+		}
+	}
+
+	.collapse-btn {
 		color: #333;
-		text-decoration: none;
+		cursor: pointer;
 		padding: 2px 8px;
-		background-color: #9dd6c5;
+		background-color: #dfe8e5;
+		&:hover {
+			text-decoration: none;
+			background-color: #9dd6c5;
+		}
 	}
 }
 
-.action-btn {
-	color: #ddd;
-	&:hover {
-		color: #9dd6c5;
-	}
-}
+/* footer */
 
-.action-btn,
-.read-less{
-	cursor: pointer;
-}
-
-.main-content {
-	min-height: 600px;
-}
-
-.date {
-	float: right;
-}
-
-.exceptions {
-	margin-top: 5px;
-}
-
-form {
-	margin: 0 auto;
-}
-
-.mail-listing li {
-	border-bottom: 1px solid #ccc;
-	margin-bottom: 10px;
-}
-
-.mail-footer {
+.footer {
 	text-align: center;
 	display: block;
 	overflow: hidden;
@@ -80,4 +68,8 @@ form {
 		overflow: hidden;
 		width: auto;
 	}
+}
+
+.pagination a {
+	cursor: pointer;
 }

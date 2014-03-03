@@ -27,12 +27,12 @@
 		</div>
 	</form>
 </div>
-<div class="row main-content">
-	<ul class="mail-listing list-unstyled">
+<div class="row mail listing">
+	<ul class="list-unstyled">
 		<li class="" ng-repeat="mail in mails | filter:query | orderBy:orderProp" >
 			<!-- <input type="checkbox" class="single-box" name="#name#"> -->
 			<!-- <a href="id-{{mail.ID}}"> -->
-				<span ng-class="count ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'" class="glyphicon read-more action-btn" ng-click="count=(count + 1) % 2" ng-init="count=0"></span>
+				<span ng-class="count ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'" class="glyphicon action-btn" ng-click="count=(count + 1) % 2" ng-init="count=0"></span>
 				<span class="glyphicon glyphicon-remove-sign action-btn" ng-click="delete{{mail.NAME}}"></span>
 			<!-- </a> -->
 			<span class="title">{{mail.SUBJECT | formatName}}</span>
@@ -41,7 +41,7 @@
 				<span class="label label-default date">{{mail.DATELASTMODIFIED | formatDate}}</span>
 				<div ng-class="count ? 'show' : 'hide'" class="alert alert-info exceptions">
 					<div ng-bind-html="mail.BODY" class="mail-body"></div>
-					<a class="read-less" ng-click="count=0"><span class="glyphicon glyphicon-chevron-up"></span> collapse</a>
+					<a class="collapse-btn" ng-click="count=0"><span class="glyphicon glyphicon-chevron-up"></span> collapse</a>
 				</div>
 			</span>
 		</li>
@@ -59,7 +59,7 @@
 			</td>
 			<td class="subject">
 				<a href="id-{{mail.ID}}">
-					<span ng-class="count ? 'glyphicon-collapse-down' : 'glyphicon-expand'" class="glyphicon read-more" ng-click="count=(count + 1) % 2" ng-init="count=0"></span>
+					<span ng-class="count ? 'glyphicon-collapse-down' : 'glyphicon-expand'" class="glyphicon" ng-click="count=(count + 1) % 2" ng-init="count=0"></span>
 				</a>
 				<span class="title">{{mail.SUBJECT | formatName}}</span>
 				<span class="subject-detail">
@@ -76,7 +76,7 @@
 	</table> -->
 
  </div>
- <div class="row mail-footer">
+ <div class="row footer">
 	<ul class="pagination pagination-sm">
 		<li><a class="page-action" ng-click="prePage()">«</a></li>
 		<li><a href="#">1</a></li>

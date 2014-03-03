@@ -6,7 +6,7 @@
 	<title>Mail Viewer</title>
 	<!-- <link rel="stylesheet" href="./css/style.css"> -->
 	<link rel="stylesheet" href="./css/bootstrap.css">
-	<link rel="stylesheet" href="./css/main.less">
+	<link rel="stylesheet/less" href="./css/main.less">
 	<link rel="stylesheet" href="./css/animate.css">
 	<script src="js/jquery.min.js"></script>
 	<script src="js/readmore.min.js"></script>
@@ -21,6 +21,7 @@
 	<script src="js/animate.js"></script>
 	<script src="js/services.js"></script>
 	<script src="js/dump.min.js"></script>
+	<script src="js/less.min.js"></script>
 	<!-- <script src="js/mail.js"></script> -->
 </head>
 <body >
