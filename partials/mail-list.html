@@ -1,27 +1,15 @@
 <div class="row">
 	<form class="form-horizontal" role="form">
 		<div class="form-group">
-			<span class="action-bar">
+	<!-- 			<span class="action-bar">
 				<img src="/CFIDE/administrator/images/irefresh.gif" onclick="refresh()" alt="refresh" title="refresh" class="btn">
 				<img src="/CFIDE/administrator/images/delete_button.gif" onclick="deleteList()" alt="delete" title="delete" class="btn">
 				<img src="/CFIDE/administrator/images/ipurge.gif" alt="delete all" onclick="deleteAll()"	title="delete all" class="btn">
 				<img src="/CFIDE/administrator/images/irestart.gif" alt="reprocess" title="reprocess" class="btn">
 			</span>
-
-			<cfoutput>
-				<span class="page-toolkit">
-					<a href="" id="prev-page" class="page-action" onclick="prePage()">prev</a>
-					<a href="" id="next-page" class="page-action" onclick="nextPage()">next</a>
-					<!-- <span id="page-marker">#request.udf.getPageTookit(variables.qryMail.recordCount)#</span> -->
-<!-- 					<select name="perpage" id="perpage">
-						<option value="50" #request.udf.isSelected(50)#>50</option>
-						<option value="100" #request.udf.isSelected(100)#>100</option>
-						<option value="200" #request.udf.isSelected(200)#>200</option>
-					</select> -->
-				</span>
-			</cfoutput>
+	-->
 		</div>
-		<div class="form-group">
+		<div class="form-group action-pane">
 			<div class="col-sm-6">
 				<input ng-model="query" class="form-control" id="search-box" placeholder="search keyword">
 			</div>
@@ -39,46 +27,64 @@
 		</div>
 	</form>
 </div>
-<div class="row">
-	<table class="table table-responsive phones">
+<div class="row main-content">
+	<ul class="mail-listing list-unstyled">
+		<li class="" ng-repeat="mail in mails | filter:query | orderBy:orderProp" >
+			<!-- <input type="checkbox" class="single-box" name="#name#"> -->
+			<!-- <a href="id-{{mail.ID}}"> -->
+				<span ng-class="count ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'" class="glyphicon read-more action-btn" ng-click="count=(count + 1) % 2" ng-init="count=0"></span>
+				<span class="glyphicon glyphicon-remove-sign action-btn" ng-click="delete{{mail.NAME}}"></span>
+			<!-- </a> -->
+			<span class="title">{{mail.SUBJECT | formatName}}</span>
+			<span class="subject-detail">
+				<!-- <span class="label label-default to">To: {{mail.TO}}</span> -->
+				<span class="label label-default date">{{mail.DATELASTMODIFIED | formatDate}}</span>
+				<div ng-class="count ? 'show' : 'hide'" class="alert alert-info exceptions">
+					<div ng-bind-html="mail.BODY" class="mail-body"></div>
+					<a class="read-less" ng-click="count=0"><span class="glyphicon glyphicon-chevron-up"></span> collapse</a>
+				</div>
+			</span>
+		</li>
+	</ul>
+<!-- 	<table class="table table-responsive phones">
 		<thead>
 			<tr class="table-header">
-				<!--- <th>check</th> --->
-				<!--- <th nowrap><input type="checkbox" id='check-all'>Action</th> --->
 				<th class="subject">Subject</th>
-<!-- 				<th class="sender">Sender</th>
-				<th class="to">To</th> -->
-				<!--- <th class="size">Size</th> --->
-				<!-- <th class="date" nowrap>Date</th> -->
 			</tr>
 		</thead>
 		<tr ng-repeat="mail in mails | filter:query | orderBy:orderProp" class="mail-listing">
-<!--- 	 			<td nowrap>
+ 	 			<td nowrap>
 				<input type="checkbox" class="single-box" name="#name#">
 				<img src="/CFIDE/administrator/images/delete_button.gif" onclick="deleteEmail('#urlEncodedFormat(name)#', this)" alt="delete" title="delete" class="btn">
-			</td> --->
+			</td>
 			<td class="subject">
-				<span ng-class="count ? 'glyphicon-collapse-down' : 'glyphicon-expand'" class="glyphicon read-more" ng-click="count=(count + 1) % 2" ng-init="count=0"></span>
+				<a href="id-{{mail.ID}}">
+					<span ng-class="count ? 'glyphicon-collapse-down' : 'glyphicon-expand'" class="glyphicon read-more" ng-click="count=(count + 1) % 2" ng-init="count=0"></span>
+				</a>
 				<span class="title">{{mail.SUBJECT | formatName}}</span>
 				<span class="subject-detail">
 					<span class="label label-default to">To: {{mail.TO}}</span>
 					<span class="label label-default date">{{mail.DATELASTMODIFIED | formatDate}}</span>
-					<div ng-class="count ? 'mail-body-show' : 'mail-body-hide'" class="alert alert-info exceptions">
+					<div ng-class="count ? 'show' : 'hide'" class="alert alert-info exceptions">
 						<div ng-bind-html="mail.BODY"></div>
 						<a class="read-less" ng-click="count=0"><span class="glyphicon glyphicon-chevron-up"></span> collapse</a>
 					</div>
 				</span>
 			</td>
-<!-- 			<td>{{mail.FROM}}</td>
-			<td>{{mail.TO}}</td> -->
-			<!--- <td>{{mail.SIZE}}</td> --->
-			<!-- <td nowrap>{{mail.DATELASTMODIFIED | formatDate}}</td> -->
 		</tr>
 
- 	</table>
-<!-- 	<ul class="pager">
-		<li><a href="#">Previous</a></li>
-		<li><a href="#">Next</a></li>
-	</ul> -->
+	</table> -->
 
+ </div>
+ <div class="row mail-footer">
+	<ul class="pagination pagination-sm">
+		<li><a class="page-action" ng-click="prePage()">«</a></li>
+		<li><a href="#">1</a></li>
+		<li><a href="#">2</a></li>
+		<li><a href="#">3</a></li>
+		<li><a href="#">4</a></li>
+		<li><a href="#">5</a></li>
+		<li><a class="page-action" ng-click="nextPage()">»</a></li>
+		<li><span>{{ currentPage }} / {{ totalPage }}</span></li>
+	</ul>
  </div>

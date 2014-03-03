@@ -22,6 +22,19 @@ table {
 	display: none;
 }
 
+.read-less {
+	color: #333;
+	padding: 2px 8px;
+	background-color: #dfe8e5;
+}
+
+.read-less:hover {
+	color: #333;
+	text-decoration: none;
+	padding: 2px 8px;
+	background-color: #9dd6c5;
+}
+
 .read-less,
 .read-more {
 	cursor: pointer;
@@ -35,10 +48,13 @@ table {
 .title {
 
 }
-
+/*
 .date,
 .to {
 	margin-left: 5px;
+}*/
+.date {
+	float: right;
 }
 
 .exceptions {
@@ -47,4 +63,9 @@ table {
 
 form {
 	margin: 0 auto;
+}
+
+.mail-listing li {
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 5px;
 }

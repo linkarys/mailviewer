@@ -43,19 +43,33 @@
 			</cftry>
 		</cfcase>
 		<cfcase value="nextPage">
-			<cfset qryMail = udf.getMailList()>
-			<cfset toTalPage = ceiling(qryMail.recordCount / session.perPage)>
-			<cfif session.currentPage lt toTalPage>
-				<cfset session.currentPage += 1>
-			</cfif>
-			<mail:list qrymail="#qryMail#">
+			<cfscript>
+				maxrows = udf.getMaxRows(url);
+				toTalPage = udf.getTotalPage();
+				startRow = (udf.getCurrentPage() - 1) * maxrows + 1;
+
+				if (udf.getCurrentPage() lt toTalPage) {
+					startRow = udf.getCurrentPage() * maxrows + 1;
+					session.currentPage += 1;
+				}
+				qryMail = udf.getMails(startRow, maxrows);
+
+				writeOutput(serializeJSON(qryMail));
+			</cfscript>
 		</cfcase>
-		<cfcase value="prevPage">
-			<cfset qryMail = request.udf.getMailList()>
-			<cfif session.currentPage gt 1>
-				<cfset session.currentPage -= 1>
-			</cfif>
-			<mail:list qrymail="#qryMail#">
+		<cfcase value="prePage">
+			<cfscript>
+				maxrows = udf.getMaxRows(url);
+				startRow = (udf.getCurrentPage() - 1) * maxrows + 1;
+
+				if (udf.getCurrentPage() gt 1) {
+					startRow = udf.getCurrentPage() * maxrows + 1;
+					session.currentPage -= 1;
+				}
+				qryMail = udf.getMails(startRow, maxrows);
+
+				writeOutput(serializeJSON(qryMail));
+			</cfscript>
 		</cfcase>
 		<cfcase value="updatePerpage">
 			<cfset session.perPage = url.perPage>

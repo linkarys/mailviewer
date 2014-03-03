@@ -26,7 +26,7 @@ function nextPage(e) {
 			action: 'prevPage'
 		},
 		success: function(data) {
-			console.log($listWrapper);
+
 			console.log(data);
 			$listWrapper.stop(true, true).show().html(data);
 			$pageMarker.html($($.parseHTML(data)).find('#toolkit-info').html());
@@ -35,8 +35,7 @@ function nextPage(e) {
 }
 
 
-$('#next-page').click(function(e) {
-	e.preventDefault();
+function prePage() {
 	$listWrapper.fadeOut();
 	$.ajax({
 		url: baseUrl,
@@ -44,8 +43,9 @@ $('#next-page').click(function(e) {
 			action: 'nextPage'
 		},
 		success: function(data) {
+			console.log(data);
 			$listWrapper.stop(true, true).show().html(data);
 			$pageMarker.html($($.parseHTML(data)).find('#toolkit-info').html());
 		}
 	})
-})
+}

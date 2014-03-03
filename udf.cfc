@@ -60,28 +60,25 @@ component output="false" displayname=""  {
 
 	public query function getMails(numeric startRow, numeric maxRows) {
 		var qryFile = getFileList();
-		var qryService = new query(sql='SELECT * FROM qryFile', dbtype="query", qryFile = qryFile, startrow="#startRow#", maxrows="#maxRows#");
-		var qryResult = qryService.execute().getResult();
+		var qryResult = queryNew("name,subject,from,to,body,dateLastModified,currentPage,totalPage", 'varchar,varchar,varchar,varchar,varchar,date,varchar,varchar');
 		var aryID = ArrayNew(1);
 		var arySubject = ArrayNew(1);
 		var aryFrom = ArrayNew(1);
 		var aryTo = ArrayNew(1);
 		var aryBody = ArrayNew(1);
 
-		for(i = 1; i lte qryResult.recordCount; i=i+1) {
-			mail = getMail(qryResult.name[i], true);
-			arrayAppend(aryID, i);
-			arrayAppend(arySubject, mail.subject);
-			arrayAppend(aryFrom, mail.From);
-			arrayAppend(aryTo, mail.To);
-			arrayAppend(aryBody, mail.Body);
+		for(i = startRow; (i lte qryFile.recordCount) and (i lte (startRow + maxRows)); i=i+1) {
+			mail = getMail(qryFile.name[i], true);
+			queryAddRow(qryResult);
+			querySetCell(qryResult, "name", qryFile.name[i]);
+			querySetCell(qryResult, "subject", mail.subject);
+			querySetCell(qryResult, "from", mail.from);
+			querySetCell(qryResult, "to", mail.to);
+			querySetCell(qryResult, "body", mail.body);
+			querySetCell(qryResult, "dateLastModified", qryFile.dateLastModified[i]);
+			querySetCell(qryResult, "currentPage", getCurrentPage());
+			querySetCell(qryResult, "totalPage", getTotalPage());
 		}
-
-		QueryAddColumn(qryResult, 'id', 'varchar', aryID);
-		QueryAddColumn(qryResult, 'subject', 'varchar', arySubject);
-		QueryAddColumn(qryResult, 'from', 'varchar', aryFrom);
-		QueryAddColumn(qryResult, 'to', 'varchar', aryTo);
-		QueryAddColumn(qryResult, 'body', 'varchar', aryBody);
 
 		return qryResult;
 	}
@@ -120,8 +117,13 @@ component output="false" displayname=""  {
 			return this.DEFULT_PERPAGE;
 		}
 	}
+
+	public string function getTotalPage() {
+		return ceiling(getFileList().recordCount / getPerPage());
+	}
+
 	public string function getStartRow(url) {
-		if (len(getArgValue(url, "startRow"))) {
+		if (len(getArgValue(url, "startRow")) AND isNumeric(url.startRow)) {
 			return url.startRow;
 		}
 
@@ -133,6 +135,13 @@ component output="false" displayname=""  {
 			return url.maxRows;
 		}
 		return getPerpage();
+	}
+
+	public string function getCurrentPage() {
+		if (not len(getArgValue(SESSION, 'currentPage'))) {
+			SESSION.currentPage = 1;
+		}
+		return SESSION.currentPage;
 	}
 
 	/**

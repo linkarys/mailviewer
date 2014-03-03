@@ -5,8 +5,42 @@ var mailControllers = angular.module('mailControllers', [])
 		function($scope, Mail) {
 			Mail.query({}, function(data) {
 				$scope.mails = remap(data);
+				$scope.currentPage = getCurrentPage($scope.mails);
+				$scope.totalPage = getTotalPage($scope.mails);
 			});
 			$scope.orderProp = 'DATELASTMODIFIED';
+
+			$scope.nextPage = function() {
+				$scope.mails = [];
+				Mail.next({}, function(data) {
+					// console.log(remap(data));
+					$scope.mails = remap(data);
+					$scope.currentPage = getCurrentPage($scope.mails);
+					$scope.totalPage = getTotalPage($scope.mails);
+					// console.log($scope.mails);
+				});
+			}
+
+			$scope.delete = function(name) {
+				Mail.delete({fileName: name}, function(data) {
+					// console.log(remap(data));
+					$scope.mails = remap(data);
+					$scope.currentPage = getCurrentPage($scope.mails);
+					$scope.totalPage = getTotalPage($scope.mails);
+					// console.log($scope.mails);
+				});
+			}
+
+			$scope.prePage = function() {
+				$scope.mails = [];
+				Mail.pre({}, function(data) {
+					// console.log(data);
+					$scope.mails = remap(data);
+					$scope.currentPage = getCurrentPage($scope.mails);
+					$scope.totalPage = getTotalPage($scope.mails);
+					// console.log($scope.mails);
+				});
+			}
 		}
 	])
 	.controller('mailDetailCtrl', ['$scope', '$routeParams', '$http', 'Mail', '$sce',
@@ -38,4 +72,16 @@ function remap(data) {
 		result.push(tmp);
 	}
 	return result;
+}
+
+function getCurrentPage(mails) {
+	if (mails.length) {
+		return mails[0]['CURRENTPAGE'];
+	}
+}
+
+function getTotalPage(mails) {
+	if (mails.length) {
+		return mails[0]['TOTALPAGE'];
+	}
 }

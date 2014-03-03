@@ -25,18 +25,6 @@
 			<th>To:</th>
 			<td>#variables.mail.to#</td>
 		</tr>
-<!--- 		<tr>
-			<th></th>
-			<td></td>
-		</tr>
-		<tr>
-			<th></th>
-			<td></td>
-		</tr>
-		<tr>
-			<th></th>
-			<td></td>
-		</tr> --->
 	</table>
 	#variables.mail.body#
 </cfoutput>
