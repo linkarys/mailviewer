@@ -67,7 +67,7 @@ component output="false" displayname=""  {
 		var aryTo = ArrayNew(1);
 		var aryBody = ArrayNew(1);
 
-		for(i = startRow; (i lte qryFile.recordCount) and (i lte (startRow + maxRows)); i=i+1) {
+		for(i = startRow; (i lte qryFile.recordCount) and (i lt (startRow + maxRows)); i=i+1) {
 			mail = getMail(qryFile.name[i], true);
 			queryAddRow(qryResult);
 			querySetCell(qryResult, "name", qryFile.name[i]);

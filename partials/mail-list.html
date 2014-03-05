@@ -29,11 +29,11 @@
 </div>
 <div class="row mail listing">
 	<ul class="list-unstyled">
-		<li class="" ng-repeat="mail in mails | filter:query | orderBy:orderProp" >
+		<li class="" ng-repeat="mail in mails | filter:query " >
 			<!-- <input type="checkbox" class="single-box" name="#name#"> -->
 			<!-- <a href="id-{{mail.ID}}"> -->
 				<span ng-class="count ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'" class="glyphicon action-btn" ng-click="count=(count + 1) % 2" ng-init="count=0"></span>
-				<span class="glyphicon glyphicon-remove-sign action-btn" ng-click="delete{{mail.NAME}}"></span>
+				<span class="glyphicon glyphicon-remove-sign action-btn" ng-click="delete(mail.NAME, $index)"></span>
 			<!-- </a> -->
 			<span class="title">{{mail.SUBJECT | formatName}}</span>
 			<span class="subject-detail">

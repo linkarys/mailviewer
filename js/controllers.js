@@ -13,32 +13,39 @@ var mailControllers = angular.module('mailControllers', [])
 			$scope.nextPage = function() {
 				$scope.mails = [];
 				Mail.next({}, function(data) {
-					// console.log(remap(data));
 					$scope.mails = remap(data);
 					$scope.currentPage = getCurrentPage($scope.mails);
 					$scope.totalPage = getTotalPage($scope.mails);
-					// console.log($scope.mails);
 				});
 			}
 
-			$scope.delete = function(name) {
-				Mail.delete({fileName: name}, function(data) {
-					// console.log(remap(data));
-					$scope.mails = remap(data);
-					$scope.currentPage = getCurrentPage($scope.mails);
-					$scope.totalPage = getTotalPage($scope.mails);
-					// console.log($scope.mails);
-				});
+			$scope.delete = function(filename, idx) {
+				Mail.get({action: 'deleteEmail', mail: filename}, function(status) {
+					$scope.mails.splice(idx, 1);
+					Mail.push({}, function(data) {
+						var mail = remap(data);
+						if (mail.length) {
+							$scope.mails.push(mail[0])
+							$scope.currentPage = getCurrentPage(mail);
+							$scope.totalPage = getTotalPage(mail);
+						}
+					});
+					if (!$scope.mails.length) {
+						Mail.pre({}, function(data) {
+							$scope.mails = remap(data);
+							$scope.currentPage = getCurrentPage($scope.mails);
+							$scope.totalPage = getTotalPage($scope.mails);
+						});
+					}
+				})
 			}
 
 			$scope.prePage = function() {
 				$scope.mails = [];
 				Mail.pre({}, function(data) {
-					// console.log(data);
 					$scope.mails = remap(data);
 					$scope.currentPage = getCurrentPage($scope.mails);
 					$scope.totalPage = getTotalPage($scope.mails);
-					// console.log($scope.mails);
 				});
 			}
 		}

@@ -14,6 +14,18 @@
 				writeOutput(serializeJSON(qryMail));
 			</cfscript>
 		</cfcase>
+		<cfcase value="push">
+			<cfscript>
+				if (udf.getCurrentPage() eq udf.getTotalPage) {
+					writeOutput('');
+				} else {
+					maxrows = udf.getMaxRows();
+					startRow = udf.getCurrentPage() * maxrows - 1;
+					qryMail = udf.getMails(startRow, 1);
+					writeOutput(serializeJSON(qryMail));
+				}
+			</cfscript>
+		</cfcase>
 		<cfcase value="show">
 			<cfoutput>
 				<mail:body mail="#urlDecode(url.mail)#">
