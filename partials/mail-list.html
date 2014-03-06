@@ -1,14 +1,5 @@
 <div class="row">
 	<form class="form-horizontal" role="form">
-		<div class="form-group">
-	<!-- 			<span class="action-bar">
-				<img src="/CFIDE/administrator/images/irefresh.gif" onclick="refresh()" alt="refresh" title="refresh" class="btn">
-				<img src="/CFIDE/administrator/images/ipurge.gif" alt="delete all" onclick="deleteAll()"	title="delete all" class="btn">
-				<img src="/CFIDE/administrator/images/irestart.gif" alt="reprocess" title="reprocess" class="btn">
-			</span>
-	-->
-		</div>
-
 		<div class="from-group">
 			<div class="btn-group btn-group-action">
 				<button type="button" class="btn btn-default"><a href="#"><span class="glyphicon glyphicon-refresh"></span></a></button>
@@ -29,7 +20,7 @@
 				<button class="btn btn-group-addon"><span>{{ currentPage }} / {{ totalPage }}</span></button>
 			</div>
 		</div>
-<!-- 		<div class="form-group action-pane">
+		<div class="form-group action-pane">
 			<div class="col-sm-6">
 				<input ng-model="query" class="form-control" id="search-box" placeholder="search keyword">
 			</div>
@@ -44,19 +35,17 @@
 					</select>
 				</div>
 			</div>
-		</div> -->
+		</div>
 	</form>
 </div>
 <div class="row mail listing">
 	<!-- <input type="checkbox" ng-click="selectAll()"> -->
 	<ul class="list-unstyled">
-		<li ng-repeat="mail in mails | filter:query" >
-			<!-- <input type="checkbox" class="single-box" name="#name#"> -->
+		<li ng-repeat="mail in mails | filter:query | orderBy:orderProp " >
 			<span ng-class="mail.show ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'" class="glyphicon action-btn unselectable" ng-click="mail.show=!mail.show" ng-init="mail.show=false"></span>
 			<span class="glyphicon glyphicon-remove-sign action-btn unselectable" ng-click="mail.deleteMark=true; delete()"></span>
 			<input type="checkbox" class="action-btn" ng-click="mail.deleteMark=!mail.deleteMark" ng-init="mail.deleteMark=false"><span class="title">{{mail.SUBJECT | formatName}}</span>
 			<span class="subject-detail">
-				<!-- <span class="label label-default to">To: {{mail.TO}}</span> -->
 				<span class="label label-default date">{{mail.DATELASTMODIFIED | formatDate}}</span>
 				<div ng-class="mail.show ? 'show' : 'hide'" class="alert alert-info exceptions">
 					<div ng-bind-html="mail.BODY" class="body"></div>

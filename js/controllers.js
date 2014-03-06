@@ -6,7 +6,7 @@ var mailControllers = angular.module('mailControllers', [])
 			Mail.query({}, function(data) {
 				$scope.fetchContent(data);
 			});
-			// $scope.orderProp = 'DATELASTMODIFIED';
+			$scope.orderProp = 'DATELASTMODIFIED';
 
 			$scope.fetchContent = function(data, append) {
 				var mails = remap(data);
