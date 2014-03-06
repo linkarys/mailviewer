@@ -10,6 +10,7 @@ component output="false" displayname=""  {
 
 	this.DEFULT_STARTROW = 1;
 	this.DEFULT_PERPAGE = 10;
+	this.DEFULT_MAXPAGE = 7;
 
 	public function init(){
 		var variables.configFile = XmlParse(ExpandPath('.') & "/settings.xml");
@@ -60,12 +61,7 @@ component output="false" displayname=""  {
 
 	public query function getMails(numeric startRow, numeric maxRows) {
 		var qryFile = getFileList();
-		var qryResult = queryNew("name,subject,from,to,body,dateLastModified,currentPage,totalPage", 'varchar,varchar,varchar,varchar,varchar,date,varchar,varchar');
-		var aryID = ArrayNew(1);
-		var arySubject = ArrayNew(1);
-		var aryFrom = ArrayNew(1);
-		var aryTo = ArrayNew(1);
-		var aryBody = ArrayNew(1);
+		var qryResult = queryNew("name,subject,from,to,body,dateLastModified,currentPage,totalPage,maxpage", 'varchar,varchar,varchar,varchar,varchar,date,varchar,varchar,varchar');
 
 		for(i = startRow; (i lte qryFile.recordCount) and (i lt (startRow + maxRows)); i=i+1) {
 			mail = getMail(qryFile.name[i], true);
@@ -78,6 +74,7 @@ component output="false" displayname=""  {
 			querySetCell(qryResult, "dateLastModified", qryFile.dateLastModified[i]);
 			querySetCell(qryResult, "currentPage", getCurrentPage());
 			querySetCell(qryResult, "totalPage", getTotalPage());
+			querySetCell(qryResult, "maxpage", getMaxpage());
 		}
 
 		return qryResult;
@@ -118,6 +115,15 @@ component output="false" displayname=""  {
 		}
 	}
 
+	public string function getMaxpage() {
+		try {
+			return variables.configFile.main.maxpage.XmlText;
+		}
+		catch(any e) {
+			return this.DEFULT_MAXPAGE;
+		}
+	}
+
 	public string function getTotalPage() {
 		return ceiling(getFileList().recordCount / getPerPage());
 	}
@@ -142,6 +148,13 @@ component output="false" displayname=""  {
 			SESSION.currentPage = 1;
 		}
 		return SESSION.currentPage;
+	}
+
+	public string function setCurrentPage(page) {
+		var strPage = getArgValue(arguments, 'page');
+		if (isNumeric(strPage) and strPage lte getTotalPage()) {
+			SESSION.currentPage = strPage;
+		}
 	}
 
 	/**

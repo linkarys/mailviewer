@@ -22,7 +22,6 @@
 	<script src="js/services.js"></script>
 	<script src="js/dump.min.js"></script>
 	<script src="js/less.min.js"></script>
-	<!-- <script src="js/mail.js"></script> -->
 </head>
 <body >
 	<div class="view-container container">

@@ -1,6 +1,6 @@
 angular.module('mailServices', ['ngResource'])
 .factory('Mail', ['$resource',
-	function($resource){
+	function($resource, abc){
 		return $resource('controller.cfm/:filename', {filename: '@filename'}, {
 		// return $resource('data/data.js', {}, {
 			query: {method:'GET', params:{action:'list'}, isArray: false},

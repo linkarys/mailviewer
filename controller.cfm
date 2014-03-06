@@ -6,14 +6,6 @@
 <!--- Use the array to add a column to the query. --->
 <cfif structkeyexists(url, 'action')>
 	<cfswitch expression="#url.action#">
-		<cfcase value="list">
-			<cfscript>
-				startRow = udf.getStartRow(url);
-				maxrows = udf.getMaxRows(url);
-				qryMail = udf.getMails(startRow, maxrows);
-				writeOutput(serializeJSON(qryMail));
-			</cfscript>
-		</cfcase>
 		<cfcase value="push">
 			<cfscript>
 				if (udf.getCurrentPage() eq udf.getTotalPage) {
@@ -31,7 +23,7 @@
 				<mail:body mail="#urlDecode(url.mail)#">
 			</cfoutput>
 		</cfcase>
-		<cfcase value="deleteEmail">
+		<cfcase value="delete">
 			<cftry>
 				<cffile action="delete" file="#application.maildir#/#URLDecode(url.mail)#"> ok
 			<cfcatch type = "any">fail</cfcatch>
@@ -54,44 +46,39 @@
 			<cfcatch type = "any">fail</cfcatch>
 			</cftry>
 		</cfcase>
-		<cfcase value="nextPage">
+		<cfcase value="list,prePage,nextPage,toPage">
 			<cfscript>
-				maxrows = udf.getMaxRows(url);
-				toTalPage = udf.getTotalPage();
-				startRow = (udf.getCurrentPage() - 1) * maxrows + 1;
-
-				if (udf.getCurrentPage() lt toTalPage) {
-					startRow = udf.getCurrentPage() * maxrows + 1;
-					session.currentPage += 1;
+				// get specific page
+				switch(url.action){
+					case 'list':
+						url.idx = udf.getCurrentPage();
+					break;
+					case 'prePage': {
+						if (udf.getCurrentPage() gt 1) {
+							url.idx = udf.getCurrentPage() - 1;
+						}
+					}
+					break;
+					case 'nextPage': {
+						if (udf.getCurrentPage() lt udf.getTotalPage()) {
+							url.idx = udf.getCurrentPage() + 1;
+						}
+					}
+					break;
+					default: break;
 				}
-				qryMail = udf.getMails(startRow, maxrows);
 
+				maxrows = udf.getMaxRows(url);
+				udf.setCurrentPage(udf.getArgValue(url, 'idx'));
+				startRow = (udf.getCurrentPage() - 1) * maxrows + 1;
+				qryMail = udf.getMails(startRow, maxrows);
 				writeOutput(serializeJSON(qryMail));
 			</cfscript>
-		</cfcase>
-		<cfcase value="prePage">
-			<cfscript>
-				maxrows = udf.getMaxRows(url);
-				startRow = (udf.getCurrentPage() - 1) * maxrows + 1;
-
-				if (udf.getCurrentPage() gt 1) {
-					startRow = udf.getCurrentPage() * maxrows + 1;
-					session.currentPage -= 1;
-				}
-				qryMail = udf.getMails(startRow, maxrows);
-
-				writeOutput(serializeJSON(qryMail));
-			</cfscript>
-		</cfcase>
-		<cfcase value="updatePerpage">
-			<cfset session.perPage = url.perPage>
-			<cfset session.currentPage = 1>
-			<cfset qryMail = request.udf.getMailList()>
-			<mail:list qrymail="#qryMail#">
 		</cfcase>
 		<cfdefaultcase>
-			<h2 class="page-header">Invalid!</h2>
-			<cfabort>
+			<cfscript>
+				writeOutput(0);
+			</cfscript>
 		</cfdefaultcase>
 	</cfswitch>
 </cfif>

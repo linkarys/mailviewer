@@ -29,7 +29,7 @@
 </div>
 <div class="row mail listing">
 	<ul class="list-unstyled">
-		<li class="" ng-repeat="mail in mails | filter:query " >
+		<li class="" ng-repeat="mail in mails | filter:query" >
 			<!-- <input type="checkbox" class="single-box" name="#name#"> -->
 			<!-- <a href="id-{{mail.ID}}"> -->
 				<span ng-class="count ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'" class="glyphicon action-btn" ng-click="count=(count + 1) % 2" ng-init="count=0"></span>
@@ -77,14 +77,12 @@
 
  </div>
  <div class="row footer">
-	<ul class="pagination pagination-sm">
+	<ul class="pagination">
+		<li><a class="page-action" ng-click="toPage(1)">first</a></li>
 		<li><a class="page-action" ng-click="prePage()">«</a></li>
-		<li><a href="#">1</a></li>
-		<li><a href="#">2</a></li>
-		<li><a href="#">3</a></li>
-		<li><a href="#">4</a></li>
-		<li><a href="#">5</a></li>
+		<li ng-repeat="page in pages" ng-click="toPage(page)"><a>{{page}}</a></li>
 		<li><a class="page-action" ng-click="nextPage()">»</a></li>
+		<li><a class="page-action" ng-click="toPage(totalPage)">last</a></li>
 		<li><span>{{ currentPage }} / {{ totalPage }}</span></li>
 	</ul>
  </div>
