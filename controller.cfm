@@ -25,18 +25,26 @@
 			</cfoutput>
 		</cfcase>
 		<cfcase value="delete">
-			<cftry>
-				<cffile action="delete" file="#application.maildir#/#URLDecode(url.mail)#"> ok
-			<cfcatch type = "any">fail</cfcatch>
-			</cftry>
+			<cfscript>
+				try {
+					fileDelete(application.maildir & '/'  & URLDecode(url.mail));
+				}
+				catch(any e) {
+					writeOutput(0);
+				}
+			</cfscript>
 		</cfcase>
 		<cfcase value="deleteList">
-			<cftry>
-				<cfloop list="#lstMail#" index="name">
-					<cffile action="delete" file="#application.maildir#/#URLDecode(name)#">
-				</cfloop>ok
-			<cfcatch type = "any">fail</cfcatch>
-			</cftry>
+			<cfscript>
+				try {
+					for(item in url.lstMail) {
+						fileDelete(application.maildir & '/'  & URLDecode(item));
+					}
+				}
+				catch(any e) {
+					writeOutput(0);
+				}
+			</cfscript>
 		</cfcase>
 		<cfcase value="deleteAll">
 			<cftry>
