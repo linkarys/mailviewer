@@ -4,7 +4,7 @@ angular.module('mailServices', ['ngResource'])
 		return $resource('controller.cfm/:filename', {filename: '@filename'}, {
 		// return $resource('data/data.js', {}, {
 			query: {method:'GET', params:{action:'list'}, isArray: false},
-			push: {method:'GET', params:{action:'push'}, isArray: false},
+			concat: {method:'GET', params:{action:'concat'}, isArray: false},
 			show: {method:'GET', params:{action:'show'}, isArray: false},
 			next: {method:'GET', params:{action:'nextPage'}, isArray: false},
 			pre: {method:'GET', params:{action:'prePage'}, isArray: false},

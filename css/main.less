@@ -1,13 +1,36 @@
+/**
+ * Common
+ * ----------------------------------------------------------------------------
+ */
+
+
 table {
 	font-size: 1em;
 }
 
-body {
+body,
+.btn {
 	color: #555;
 }
 
+.unselectable{
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
 
-/* mail */
+
+.action-pane {
+	margin: 25px 0;
+}
+
+/**
+ * Mail
+ * ----------------------------------------------------------------------------
+ */
+
 
 .mail {
 	&.listing {
@@ -33,10 +56,6 @@ body {
 		}
 	}
 
-	.action-pane {
-		margin-bottom: 25px;
-	}
-
 	.action-btn {
 		color: #ddd;
 		cursor: pointer;
@@ -57,7 +76,48 @@ body {
 	}
 }
 
-/* footer */
+
+/**
+ * Pagination
+ * ----------------------------------------------------------------------------
+ */
+.btn-group-action,
+.btn-group-pagination{
+	a {
+		color: #333;
+	}
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	.btn {
+		background-color: #fff;
+		&:hover {
+			color: #333;
+			background-color: #EBEBEB;
+			border-color: #ADADAD;
+		}
+	}
+	.btn-group-addon {
+		font-weight: 400;
+		color: #555;
+		background-color: #EEE;
+		border-radius: 4px;
+		&:hover {
+			color: #555;
+			background-color: #EEE;
+			border-color: #ccc;
+		}
+	}
+}
+
+.btn-group-action {
+	border: none;
+}
+
+/**
+ * Footer
+ * ----------------------------------------------------------------------------
+ */
+
 
 .footer {
 	text-align: center;
@@ -68,8 +128,4 @@ body {
 		overflow: hidden;
 		width: auto;
 	}
-}
-
-.pagination a {
-	cursor: pointer;
 }

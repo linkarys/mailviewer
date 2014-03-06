@@ -8,8 +8,6 @@
 	<link rel="stylesheet" href="./css/bootstrap.css">
 	<link rel="stylesheet/less" href="./css/main.less">
 	<link rel="stylesheet" href="./css/animate.css">
-	<script src="js/jquery.min.js"></script>
-	<script src="js/readmore.min.js"></script>
 	<script src="js/angular.min.js"></script>
 	<script src="js/angular-sanitize.min.js"></script>
 	<script src="js/angular-resource.js"></script>

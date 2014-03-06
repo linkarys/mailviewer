@@ -6,14 +6,15 @@
 <!--- Use the array to add a column to the query. --->
 <cfif structkeyexists(url, 'action')>
 	<cfswitch expression="#url.action#">
-		<cfcase value="push">
+		<cfcase value="concat">
 			<cfscript>
 				if (udf.getCurrentPage() eq udf.getTotalPage) {
 					writeOutput('');
 				} else {
 					maxrows = udf.getMaxRows();
-					startRow = udf.getCurrentPage() * maxrows - 1;
-					qryMail = udf.getMails(startRow, 1);
+					concatLen = udf.getConcatLen(url);
+					startRow = udf.getCurrentPage() * maxrows - concatLen + 1;
+					qryMail = udf.getMails(startRow, concatLen);
 					writeOutput(serializeJSON(qryMail));
 				}
 			</cfscript>
@@ -48,7 +49,7 @@
 		</cfcase>
 		<cfcase value="list,prePage,nextPage,toPage">
 			<cfscript>
-				// get specific page
+				// get the pagination to go
 				switch(url.action){
 					case 'list':
 						url.idx = udf.getCurrentPage();

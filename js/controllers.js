@@ -33,19 +33,33 @@ var mailControllers = angular.module('mailControllers', [])
 				});
 			}
 
-			$scope.delete = function(filename, idx) {
-				Mail.get({action: 'delete', mail: filename}, function(status) {
-					$scope.mails.splice(idx, 1);
-					Mail.push({}, function(data) {
+			$scope.delete = function() {
+				var emailToDelete = [];
+				var newMails = []
+				for (var i in $scope.mails) {
+					if ($scope.mails[i].deleteMark) {
+						emailToDelete.push($scope.mails[i].NAME);
+					} else {
+						newMails.push($scope.mails[i]);
+					}
+				}
+
+				Mail.get({action: 'deleteList', lstMail: emailToDelete.join(',')}, function(status) {
+					$scope.mails = newMails;
+					Mail.get({action: 'concat', concatLen: emailToDelete.length}, function(data) {
 						$scope.fetchContent(data, true);
-						// console.log($scope.mails.length);
-						if (!$scope.mails.length) {
-							Mail.pre({}, function(data) {
-								$scope.fetchContent(data, true);
-							});
-						}
-					});
+						$scope.checkEmpty();
+					})
 				})
+
+			}
+
+			$scope.checkEmpty = function() {
+				if (!$scope.mails.length) {
+					Mail.pre({}, function(data) {
+						$scope.fetchContent(data, true);
+					});
+				}
 			}
 
 			$scope.prePage = function() {
@@ -61,12 +75,6 @@ var mailControllers = angular.module('mailControllers', [])
 					$scope.fetchContent(data, true);
 				});
 
-				// Mail.query({idxPage: idxPage}, function(data) {
-				// 	$scope.mails = remap(data);
-				// 	$scope.currentPage = getCurrentPage($scope.mails);
-				// 	$scope.totalPage = getTotalPage($scope.mails);
-				// 	$scope.pages = getPages($scope);
-				// });
 			}
 
 			$scope.getPages = function () {

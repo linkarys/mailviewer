@@ -11,6 +11,7 @@ component output="false" displayname=""  {
 	this.DEFULT_STARTROW = 1;
 	this.DEFULT_PERPAGE = 10;
 	this.DEFULT_MAXPAGE = 7;
+	this.DEFAULT_CONCATLEN = 1;
 
 	public function init(){
 		var variables.configFile = XmlParse(ExpandPath('.') & "/settings.xml");
@@ -148,6 +149,14 @@ component output="false" displayname=""  {
 			SESSION.currentPage = 1;
 		}
 		return SESSION.currentPage;
+	}
+
+	public string function getConcatLen(url) {
+		var concatLen = getArgValue(url, 'concatLen');
+		if (isNumeric(concatLen)) {
+			return concatLen;
+		}
+		return this.DEFAULT_CONCATLEN;
 	}
 
 	public string function setCurrentPage(page) {

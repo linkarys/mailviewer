@@ -3,13 +3,34 @@
 		<div class="form-group">
 	<!-- 			<span class="action-bar">
 				<img src="/CFIDE/administrator/images/irefresh.gif" onclick="refresh()" alt="refresh" title="refresh" class="btn">
-				<img src="/CFIDE/administrator/images/delete_button.gif" onclick="deleteList()" alt="delete" title="delete" class="btn">
 				<img src="/CFIDE/administrator/images/ipurge.gif" alt="delete all" onclick="deleteAll()"	title="delete all" class="btn">
 				<img src="/CFIDE/administrator/images/irestart.gif" alt="reprocess" title="reprocess" class="btn">
 			</span>
 	-->
 		</div>
-		<div class="form-group action-pane">
+
+		<div class="from-group">
+			<div class="btn-group btn-group-action">
+				<button type="button" class="btn btn-default"><a href="#"><span class="glyphicon glyphicon-refresh"></span></a></button>
+				<button type="button" class="btn btn-default" ng-click="delete()"><span class="glyphicon glyphicon-remove"></span></button>
+				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-ban-circle"></span></button>
+
+			</div>
+			<div class="btn-group">
+				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-th-large"></span></button>
+				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-th-list"></span></button>
+				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-cog"></span></button>
+			</div>
+			<div class="btn-group unselectable btn-group-pagination">
+				<button class="btn" ng-click="toPage(1)">first</button>
+				<button class="btn" ng-click="prePage()">«</button>
+				<button class="btn" ng-repeat="page in pages" ng-click="toPage(page)">{{page}}</button>
+				<button class="btn" ng-click="nextPage()">»</button>
+				<button class="btn" ng-click="toPage(totalPage)">last</button>
+				<button class="btn btn-group-addon"><span>{{ currentPage }} / {{ totalPage }}</span></button>
+			</div>
+		</div>
+<!-- 		<div class="form-group action-pane">
 			<div class="col-sm-6">
 				<input ng-model="query" class="form-control" id="search-box" placeholder="search keyword">
 			</div>
@@ -24,24 +45,22 @@
 					</select>
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</form>
 </div>
 <div class="row mail listing">
 	<ul class="list-unstyled">
-		<li class="" ng-repeat="mail in mails | filter:query" >
+		<li ng-repeat="mail in mails | filter:query" >
 			<!-- <input type="checkbox" class="single-box" name="#name#"> -->
-			<!-- <a href="id-{{mail.ID}}"> -->
-				<span ng-class="count ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'" class="glyphicon action-btn" ng-click="count=(count + 1) % 2" ng-init="count=0"></span>
-				<span class="glyphicon glyphicon-remove-sign action-btn" ng-click="delete(mail.NAME, $index)"></span>
-			<!-- </a> -->
-			<span class="title">{{mail.SUBJECT | formatName}}</span>
+			<span ng-class="mail.show ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'" class="glyphicon action-btn unselectable" ng-click="mail.show=!mail.show" ng-init="mail.show=false"></span>
+			<span class="glyphicon glyphicon-remove-sign action-btn unselectable" ng-click="mail.deleteMark=true; delete()"></span>
+			<input type="checkbox" class="action-btn" ng-click="mail.deleteMark=!mail.deleteMark" ng-init="mail.deleteMark=false"><span class="title">{{mail.SUBJECT | formatName}}</span>
 			<span class="subject-detail">
 				<!-- <span class="label label-default to">To: {{mail.TO}}</span> -->
 				<span class="label label-default date">{{mail.DATELASTMODIFIED | formatDate}}</span>
-				<div ng-class="count ? 'show' : 'hide'" class="alert alert-info exceptions">
+				<div ng-class="mail.show ? 'show' : 'hide'" class="alert alert-info exceptions">
 					<div ng-bind-html="mail.BODY" class="body"></div>
-					<a class="collapse-btn" ng-click="count=0"><span class="glyphicon glyphicon-chevron-up"></span> collapse</a>
+					<a class="collapse-btn" ng-click="mail.show=false"><span class="glyphicon glyphicon-chevron-up"></span> collapse</a>
 				</div>
 			</span>
 		</li>
@@ -77,12 +96,5 @@
 
  </div>
  <div class="row footer">
-	<ul class="pagination">
-		<li><a class="page-action" ng-click="toPage(1)">first</a></li>
-		<li><a class="page-action" ng-click="prePage()">«</a></li>
-		<li ng-repeat="page in pages" ng-click="toPage(page)"><a>{{page}}</a></li>
-		<li><a class="page-action" ng-click="nextPage()">»</a></li>
-		<li><a class="page-action" ng-click="toPage(totalPage)">last</a></li>
-		<li><span>{{ currentPage }} / {{ totalPage }}</span></li>
-	</ul>
+
  </div>
