@@ -39,12 +39,12 @@
 	</form>
 </div>
 <div class="row mail listing">
-	<!-- <input type="checkbox" ng-click="selectAll()"> -->
+	<label class="check-all"><input type="checkbox" data-ng-click="toggle()"> Toggle</label>
 	<ul class="list-unstyled">
 		<li ng-repeat="mail in mails | filter:query | orderBy:orderProp " >
 			<span ng-class="mail.show ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'" class="glyphicon action-btn unselectable" ng-click="mail.show=!mail.show" ng-init="mail.show=false"></span>
 			<span class="glyphicon glyphicon-remove-sign action-btn unselectable" ng-click="mail.deleteMark=true; delete()"></span>
-			<input type="checkbox" class="action-btn" ng-click="mail.deleteMark=!mail.deleteMark" ng-init="mail.deleteMark=false"><span class="title">{{mail.SUBJECT | formatName}}</span>
+			<input type="checkbox" data-ng-model="mail.deleteMark" ng-init="mail.deltedMark=false" class="action-btn" ><span class="title">{{mail.SUBJECT | formatName}}</span>
 			<span class="subject-detail">
 				<span class="label label-default date">{{mail.DATELASTMODIFIED | formatDate}}</span>
 				<div ng-class="mail.show ? 'show' : 'hide'" class="alert alert-info exceptions">

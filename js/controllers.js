@@ -18,6 +18,12 @@ var mailControllers = angular.module('mailControllers', [])
 				$scope.updateDetails();
 			}
 
+			$scope.toggle = function() {
+				angular.forEach($scope.mails, function(mail) {
+					mail.deleteMark = !mail.deleteMark;
+				})
+			}
+
 			$scope.updateDetails = function() {
 				if ($scope.mails && $scope.mails.length) {
 					$scope.currentPage = $scope.mails[$scope.mails.length-1]['CURRENTPAGE'];
