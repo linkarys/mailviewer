@@ -47,13 +47,17 @@
 			</cfscript>
 		</cfcase>
 		<cfcase value="deleteAll">
-			<cftry>
-				<cfdirectory action="list" directory="#application.maildir#" recurse="true" listinfo="name" name="qFile" />
-				<cfloop query="qFile">
-					<cffile action="delete" file="#application.maildir#/#name#">
-				</cfloop>ok
-			<cfcatch type = "any">fail</cfcatch>
-			</cftry>
+			<cfscript>
+				qryFile = udf.getFileList();
+				try {
+					for(item in qryFile) {
+						fileDelete(application.maildir & '/'  & URLDecode(item.Name));
+					}
+				}
+				catch(any e) {
+					writeOutput(0);
+				}
+			</cfscript>
 		</cfcase>
 		<cfcase value="list,prePage,nextPage,toPage">
 			<cfscript>

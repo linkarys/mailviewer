@@ -77,9 +77,12 @@ var mailControllers = angular.module('mailControllers', [])
 			}
 
 			$scope.deleteAll = function() {
-				Mail.deleteAll({}, function(status) {
-					$scope.mails = [];
-				});
+				var msg = 'Are you sure to delete all emails?';
+				if (window.confirm(msg)) {
+					Mail.deleteAll({}, function(status) {
+						$scope.mails = [];
+					});
+				}
 			}
 
 			$scope.checkEmpty = function() {
