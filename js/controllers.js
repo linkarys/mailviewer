@@ -6,6 +6,7 @@ var mailControllers = angular.module('mailControllers', [])
 			Mail.query({}, function(data) {
 				$scope.fetchContent(data);
 			});
+
 			$scope.orderProp = 'DATELASTMODIFIED';
 
 			$scope.fetchContent = function(data, append) {
@@ -30,6 +31,11 @@ var mailControllers = angular.module('mailControllers', [])
 					$scope.totalPage = $scope.mails[$scope.mails.length-1]['TOTALPAGE'];
 					$scope.pages = $scope.getPages();
 				}
+
+				// page focus
+				angular.forEach($scope.pages, function(page) {
+					page.actived = page.idx === $scope.currentPage ? 'actived' : '';
+				})
 			}
 
 			$scope.prePage = function() {
@@ -58,13 +64,13 @@ var mailControllers = angular.module('mailControllers', [])
 				var emailToDelete = [],
 					newMails = [];
 
-				for (var i in $scope.mails) {
-					if ($scope.mails[i].deleteMark) {
-						emailToDelete.push($scope.mails[i].NAME);
+				angular.forEach($scope.mails, function(mail) {
+					if (mail.deleteMark) {
+						emailToDelete.push(mail.NAME);
 					} else {
-						newMails.push($scope.mails[i]);
+						newMails.push(mail);
 					}
-				}
+				})
 
 				Mail.deleteList({lstMail: emailToDelete.join(',')}, function(status) {
 					$scope.mails = newMails;
@@ -97,6 +103,7 @@ var mailControllers = angular.module('mailControllers', [])
 				var maxPages = $scope.mails[$scope.mails.length-1]['MAXPAGE'],
 					offsetStart = Math.floor((maxPages - 1) / 2),
 					offsetEnd = (maxPages - 1) - offsetStart,
+					page = {},
 					pages = [];
 
 				start = $scope.currentPage - offsetStart;
@@ -114,7 +121,9 @@ var mailControllers = angular.module('mailControllers', [])
 				end = end > $scope.totalPage ? $scope.totalPage : end;
 
 				for (var i = start; i <= end; i++) {
-					pages.push(i);
+					page.idx = i;
+					pages.push(page);
+					page = {};
 				}
 
 				return pages;

@@ -94,14 +94,24 @@ body,
 	}
 	border: 1px solid #ddd;
 	border-radius: 5px;
-	.btn {
+	.btn,
+	.page {
 		background-color: #fff;
+		&.actived,
 		&:hover {
 			color: #333;
 			background-color: #EBEBEB;
 			border-color: #ADADAD;
 		}
 	}
+
+	.page {
+		border-radius: 5px !important;
+		&.actived {
+			border-color: #fff;
+		}
+	}
+
 	.btn-group-addon {
 		font-weight: 400;
 		color: #555;

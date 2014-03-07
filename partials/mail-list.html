@@ -14,7 +14,7 @@
 			<div class="btn-group unselectable btn-group-pagination">
 				<button class="btn" ng-click="toPage(1)">first</button>
 				<button class="btn" ng-click="prePage()">«</button>
-				<button class="btn" ng-repeat="page in pages" ng-click="toPage(page)">{{page}}</button>
+				<button class="btn page {{page.actived}}" ng-repeat="page in pages" ng-click="toPage(page.idx)">{{page.idx}}</button>
 				<button class="btn" ng-click="nextPage()">»</button>
 				<button class="btn" ng-click="toPage(totalPage)">last</button>
 				<button class="btn btn-group-addon"><span>{{ currentPage }} / {{ totalPage }}</span></button>
