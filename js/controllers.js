@@ -10,7 +10,7 @@ var mailControllers = angular.module('mailControllers', [])
 			$scope.orderProp = 'DATELASTMODIFIED';
 
 			$scope.fetchContent = function(data, append) {
-				var mails = remap(data);
+				var mails = $scope.remap(data);
 
 				if (mails.length) {
 					$scope.mails = append ? $scope.mails.concat(mails) : mails;
@@ -27,8 +27,8 @@ var mailControllers = angular.module('mailControllers', [])
 
 			$scope.updateDetails = function() {
 				if ($scope.mails && $scope.mails.length) {
-					$scope.currentPage = $scope.mails[$scope.mails.length-1]['CURRENTPAGE'];
-					$scope.totalPage = $scope.mails[$scope.mails.length-1]['TOTALPAGE'];
+					$scope.currentPage = $scope.getCurrentPage();
+					$scope.totalPage = $scope.getTotalPage();
 					$scope.pages = $scope.getPages();
 				}
 
@@ -39,6 +39,8 @@ var mailControllers = angular.module('mailControllers', [])
 			}
 
 			$scope.prePage = function() {
+				if ($scope.getCurrentPage() === 1) return;
+
 				$scope.mails = [];
 				Mail.pre({}, function(data) {
 					$scope.fetchContent(data, true);
@@ -46,6 +48,9 @@ var mailControllers = angular.module('mailControllers', [])
 			}
 
 			$scope.toPage = function(idx) {
+
+				if ($scope.getCurrentPage() === idx) return;
+
 				$scope.mails = [];
 
 				Mail.toPage({idx: idx}, function(data) {
@@ -54,7 +59,10 @@ var mailControllers = angular.module('mailControllers', [])
 			}
 
 			$scope.nextPage = function() {
+				if ($scope.getCurrentPage() === $scope.getTotalPage()) return;
+
 				$scope.mails = [];
+
 				Mail.next({}, function(data) {
 					$scope.fetchContent(data);
 				});
@@ -99,6 +107,20 @@ var mailControllers = angular.module('mailControllers', [])
 				}
 			}
 
+			$scope.getCurrentPage = function() {
+				if ($scope.mails.length) {
+					return $scope.mails[$scope.mails.length-1]['CURRENTPAGE'];
+				}
+				return 0;
+			}
+
+			$scope.getTotalPage = function() {
+				if ($scope.mails.length) {
+					return $scope.mails[$scope.mails.length-1]['TOTALPAGE'];
+				}
+				return 0;
+			}
+
 			$scope.getPages = function () {
 				var maxPages = $scope.mails[$scope.mails.length-1]['MAXPAGE'],
 					offsetStart = Math.floor((maxPages - 1) / 2),
@@ -128,6 +150,18 @@ var mailControllers = angular.module('mailControllers', [])
 
 				return pages;
 			}
+
+			$scope.remap = function(data) {
+				var result = [];
+				for (var i = 0; i < data.DATA.length; i++) {
+					var tmp = {};
+					for (var j = 0; j < data.COLUMNS.length; j++) {
+						tmp[data.COLUMNS[j]] = data.DATA[i][j];
+					}
+					result.push(tmp);
+				}
+				return result;
+			}
 		}
 	])
 	.controller('mailDetailCtrl', ['$scope', '$routeParams', 'Mail', '$sce',
@@ -139,16 +173,3 @@ var mailControllers = angular.module('mailControllers', [])
 
 		}]
 	);
-
-
-function remap(data) {
-	var result = [];
-	for (var i = 0; i < data.DATA.length; i++) {
-		var tmp = {};
-		for (var j = 0; j < data.COLUMNS.length; j++) {
-			tmp[data.COLUMNS[j]] = data.DATA[i][j];
-		}
-		result.push(tmp);
-	}
-	return result;
-}
