@@ -1,10 +1,15 @@
 angular.module('mailFilters', []).
 	filter('formatName', function() {
 		return function(name) {
-			var result =  name.replace('ATII Error:', '').replace('[SEC=UNCLASSIFIED]', '').replace(/\[[^\[\]]*\]/, '');
+			var result =  name.replace(/(ATII|ETR)\sError:/, '').replace('[SEC=UNCLASSIFIED]', '').replace(/\[[^\[\]]*\]/, '');
 			if (result.replace(/\s/g, '') === '') {
 				result = '[SEC=UNCLASSIFIED]';
 			}
+
+			if (result.length > MAX_LEN_NAME) {
+				return result.substring(1, MAX_LEN_NAME) + '...';
+			}
+
 			return result;
 		}
 	}).

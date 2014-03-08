@@ -19,9 +19,10 @@ component output="false" displayname=""  {
 	}
 
 	// Parse text to struct
+	// No yet deal with attachment!
 	public struct function getMail(required string filename, required boolean isMailBodyDesired) {
 
-		var email = "";
+		var lineReader = "";
 		var parsedEmail = "";
 		var line = "";
 		var key = "";
@@ -37,17 +38,28 @@ component output="false" displayname=""  {
 		parsedEmail.filename = arguments.filename;
 
 		try {
-			email = fileOpen(application.maildir & "/" & arguments.filename, "read");
+			lineReader = createObject( "java", "java.io.LineNumberReader" ).init(
+				createObject( "java", "java.io.BufferedReader" ).init(
+					createObject( "java", "java.io.FileReader" ).init(
+						javaCast( "string", application.maildir & "/" & arguments.filename )
+						)
+					)
+				);
 
-			parsedEmail.type = getMailType(email);
+			lineReader.mark(javaCast( "int", 999999 ));
 
-			// Not deal with the scenario that type = multipart
+			parsedEmail.type = getMailType(lineReader);
+
+			// No yet deal with the scenario that type = multipart
 			if (parsedEmail.type eq 'text') {
 				parsedEmail.body = "<pre class='mail-text'>";
 			}
 
-			while (NOT FileIsEOF(email)) {
-				line = FileReadLine(email);
+			lineReader.reset();
+			while (true) {
+				line = lineReader.readLine();
+
+				if (isNULL(line)) break;
 				key = getKey(line);
 
 				if (listFindNoCase(keyLists, key)) {
@@ -67,10 +79,11 @@ component output="false" displayname=""  {
 		return parsedEmail;
 	}
 
-	public function getMailType(required mail) {
+	public function getMailType(required lineReader) {
 		var line = "";
 
-		line = FileReadLine(mail);
+		lineReader.reset();
+		line = lineReader.readLine();
 		// not sure whether is correct!!
 		if (findNoCase("bodypart-start:  text/plain;", line) and findNoCase("bodypart-start:  text/html;", line)) {
 			return "multipart";

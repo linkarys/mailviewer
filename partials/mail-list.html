@@ -1,32 +1,32 @@
-<div class="row">
-	<form class="form-horizontal" role="form">
-		<div class="from-group">
-			<div class="btn-group btn-group-action">
-				<button type="button" class="btn btn-default"><a href="#"><span class="glyphicon glyphicon-refresh"></span></a></button>
-				<button type="button" class="btn btn-default" ng-click="delete()"><span class="glyphicon glyphicon-remove"></span></button>
-				<button type="button" class="btn btn-default" ng-click="deleteAll()" title="delele all emails"><span class="glyphicon glyphicon-ban-circle"></span></button>
-			</div>
-			<div class="btn-group">
-				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-th-large"></span></button>
-				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-th-list"></span></button>
-				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-cog"></span></button>
-			</div>
-			<div class="btn-group unselectable btn-group-pagination">
-				<button class="btn" ng-click="toPage(1)">first</button>
-				<button class="btn" ng-click="prePage()">«</button>
-				<button class="btn page {{page.actived}}" ng-repeat="page in pages" ng-click="toPage(page.idx)">{{page.idx}}</button>
-				<button class="btn" ng-click="nextPage()">»</button>
-				<button class="btn" ng-click="toPage(totalPage)">last</button>
-				<button class="btn btn-group-addon"><span>{{ currentPage }} / {{ totalPage }}</span></button>
-			</div>
-		</div>
-		<div class="form-group action-pane">
-			<div class="col-sm-6">
-				<input ng-model="query" class="form-control" id="search-box" placeholder="search keyword">
-			</div>
-			<div class="col-sm-6">
-				<label for="sort-by" class="col-sm-8 control-label">Sort by</label>
-				<div class="col-sm-4">
+<div class="row ctrl-panel">
+	<form class="form-inline" role="form">
+
+	</form>
+
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container-fluid">
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<form class="navbar-form navbar-left" role="search">
+				<div class="form-group">
+					<div class="btn-group btn-group-action">
+						<button type="button" class="btn btn-default"><a href="#"><span class="glyphicon glyphicon-refresh"></span></a></button>
+						<button type="button" class="btn btn-default" ng-click="delete()"><span class="glyphicon glyphicon-remove"></span></button>
+						<button type="button" class="btn btn-default" ng-click="deleteAll()" title="delele all emails"><span class="glyphicon glyphicon-ban-circle"></span></button>
+					</div>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-th-large"></span></button>
+						<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-th-list"></span></button>
+						<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-cog"></span></button>
+					</div>
+				</div>
+				<div class="form-group">
+					<input ng-model="query" class="form-control" id="search-box" placeholder="search keyword">
+				</div>
+				<div class="form-group">
+					<label for="sort-by" class="control-label">Sort by</label>
 					<select ng-model="orderProp" class="form-control" id="sort-by">
 						<option value="SUBJECT">Subject</option>
 						<option value="FROM">Sender</option>
@@ -34,9 +34,19 @@
 						<option value="DATELASTMODIFIED">Newest</option>
 					</select>
 				</div>
-			</div>
-		</div>
-	</form>
+			</form>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+
+
+</nav>
+<div class="btn-group unselectable btn-group-pagination">
+	<button class="btn" ng-click="toPage(1)">first</button>
+	<button class="btn" ng-click="prePage()">«</button>
+	<button class="btn page {{page.actived}}" ng-repeat="page in pages" ng-click="toPage(page.idx)">{{page.idx}}</button>
+	<button class="btn" ng-click="nextPage()">»</button>
+	<button class="btn" ng-click="toPage(totalPage)">last</button>
+	<button class="btn btn-group-addon"><span>{{ currentPage }} / {{ totalPage }}</span></button>
 </div>
 <div class="row mail listing">
 	<label class="check-all" data-ng-click="toggle()">Toggle</label>

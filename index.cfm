@@ -2,7 +2,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Mail Viewer</title>
-	<!-- <link rel="stylesheet" href="./css/style.css"> -->
 	<link rel="stylesheet" href="./css/bootstrap.css">
 	<link rel="stylesheet/less" href="./css/main.less">
 	<link rel="stylesheet" href="./css/animate.css">

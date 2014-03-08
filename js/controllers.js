@@ -52,9 +52,8 @@ var mailControllers = angular.module('mailControllers', [])
 			}
 
 			$scope.scrollTo = function(target) {
-				var OFFSET_TOP = 30;
 				setTimeout(function(){
-					window.scrollTo(0, target.offsetTop - OFFSET_TOP)
+					window.scrollTo(0, target.offsetTop - MAX_LEN_NAME + OFFSET_TOP)
 				}, 100);
 			}
 

@@ -1,4 +1,6 @@
 /* App Module */
+var MAX_LEN_NAME = 100;
+var OFFSET_TOP = 20;
 
 angular.module('mailApp', [
 	'ngRoute',
