@@ -8,23 +8,31 @@
 <cfset variables.mail = request.udf.getMail(attributes.mail, true)>
 
 <cfoutput>
-	<table class="main-content viewbox">
-		<tr>
-			<th>Filename:</th>
-			<td>#attributes.mail#</td>
-		</tr>
-		<tr>
-			<th>Server:</th>
-			<td>#variables.mail.server#</td>
-		</tr>
-		<tr>
-			<th>From:</th>
-			<td>#variables.mail.from#</td>
-		</tr>
-		<tr class="splitline">
-			<th>To:</th>
-			<td>#variables.mail.to#</td>
-		</tr>
-	</table>
-	#variables.mail.body#
+	<!--- Basic Information --->
+	<div class="panel">
+		<div class="panel-heading">Basic Information</div>
+
+		<cfset variables.keyLists = "Filename,Server,From,To,Cc,Bcc,Replyto,Failto">
+		<div class="panel-body">
+			<table class="table table-responsive">
+				<cfloop index="key" list="#variables.keyLists#">
+					<cfif len(request.udf.getArgValue(variables.mail, key))>
+						<tr>
+							<th>#key#:</th>
+							<td>#variables.mail[key]#</td>
+						</tr>
+					</cfif>
+				</cfloop>
+			</table>
+		</div>
+	</div>
+
+	<!--- Mail Detail --->
+	<div class="panel">
+		<div class="panel-heading">Mail Details</div>
+		<div class="panel-body">
+			#replace(variables.mail.body, "<table>", "<table class='table'>")#
+		</div>
+	</div>
+
 </cfoutput>

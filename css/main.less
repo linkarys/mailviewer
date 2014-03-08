@@ -51,6 +51,12 @@ body,
 		margin: 3px 0;
 	}
 
+	.alert {
+		color: #8A6D3B;
+		background-color: #FEFEFC;
+		border-color: #EEE;
+	}
+
 	.body {
 		margin-bottom: 9px;
 		.show {
@@ -60,6 +66,21 @@ body,
 		.hide {
 			display: none;
 		}
+
+		.panel-heading {
+			padding: 5px 0;
+			text-align: center;
+			font-weight: bold;
+		}
+
+		tr, td, th {
+			padding: 5px;
+		}
+	}
+
+	.panel-body {
+		padding: 0;
+		overflow: auto;
 	}
 
 	.action-btn {
@@ -73,12 +94,30 @@ body,
 	.collapse-btn {
 		color: #333;
 		cursor: pointer;
-		padding: 2px 8px;
-		background-color: #dfe8e5;
+		padding: 4px 8px;
+		background-color: #DFE8EB;
+		border-radius: 5px;
 		&:hover {
 			text-decoration: none;
 			background-color: #9dd6c5;
 		}
+	}
+
+	.delete-marker {
+		position: relative;
+		top: 1px;
+	}
+
+	.subject-detail {
+		margin-left: 3px;
+	}
+
+	.title {
+		font-weight: normal;
+	}
+
+	.mail-text {
+		margin: 0;
 	}
 }
 
@@ -131,10 +170,6 @@ body,
 
 .check-all {
 	margin-left: 36px;
-	input {
-		position: relative;
-		top: 2px;
-	}
 }
 
 /**

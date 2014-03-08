@@ -7,7 +7,7 @@ var mailControllers = angular.module('mailControllers', [])
 				$scope.fetchContent(data);
 			});
 
-			$scope.orderProp = 'DATELASTMODIFIED';
+			// $scope.orderProp = 'DATELASTMODIFIED';
 
 			$scope.fetchContent = function(data, append) {
 				var mails = $scope.remap(data);
@@ -206,9 +206,7 @@ var mailControllers = angular.module('mailControllers', [])
 			// })
 
 			$http.get('controller.cfm?action=show&mail=' + $routeParams.mailId).success(function(data) {
-				// console.log(data);
 				$scope.mail = $sce.trustAsHtml(data);
-				console.log($scope.mail);
 			})
 
 		}]

@@ -25,7 +25,6 @@ component output="false" displayname=""  {
 		var parsedEmail = "";
 		var line = "";
 		var key = "";
-		var content = "";
 		var keyLists = "server,from,to,cc,bcc,subject,replyto,failto";
 
 		if (structKeyExists(application.fileCache, arguments.fileName) AND NOT arguments.isMailBodyDesired) {
@@ -39,21 +38,47 @@ component output="false" displayname=""  {
 
 		try {
 			email = fileOpen(application.maildir & "/" & arguments.filename, "read");
+
+			parsedEmail.type = getMailType(email);
+
+			// Not deal with the scenario that type = multipart
+			if (parsedEmail.type eq 'text') {
+				parsedEmail.body = "<pre class='mail-text'>";
+			}
+
 			while (NOT FileIsEOF(email)) {
 				line = FileReadLine(email);
 				key = getKey(line);
-				content = getContent(line);
 
 				if (listFindNoCase(keyLists, key)) {
-					parsedEmail[key] = parsedEmail[key] & getContent(line);
+					parsedEmail[key] = parsedEmail[key] & getValue(line);
 				}
 			}
+
+			if (parsedEmail.type eq 'text') {
+				parsedEmail.body &= "</pre>";
+			}
+
 		} catch (any e) {
 			return parsedEmail;
 		}
 
 
 		return parsedEmail;
+	}
+
+	public function getMailType(required mail) {
+		var line = "";
+
+		line = FileReadLine(mail);
+		// not sure whether is correct!!
+		if (findNoCase("bodypart-start:  text/plain;", line) and findNoCase("bodypart-start:  text/html;", line)) {
+			return "multipart";
+		} else if (findNoCase("text/html", line)) {
+			return "html";
+		} else {
+			return "text";
+		}
 	}
 
 	public query function getFileList() {
@@ -81,20 +106,6 @@ component output="false" displayname=""  {
 		return qryResult;
 	}
 
-	public function isSelected(current) {
-		if (current eq session.perPage) {
-			return 'selected="selected"';
-		}
-	}
-
-	public function getPageTookit(required numeric recordCount) {
-		var numTotal = ceiling(recordCount / session.perpage);
-
-		if (not structKeyExists(session, "currentPage")) {
-			session.currentPage = 1;
-		}
-		return session.currentPage & ' / ' & numTotal;
-	}
 
 	public string function fncFileSize(required numeric size) {
 
@@ -184,8 +195,8 @@ component output="false" displayname=""  {
 		return trim(listFirst(line, ":"));
 	}
 
-	private string function getContent(required string line) {
-		return trim(replace(line, getKey(line) & ':', ""));
+	private string function getValue(required string line) {
+		return trim(replace(line, getKey(line) & ':', "")) & chr(10);
 	}
 
 	// Intialize email struct

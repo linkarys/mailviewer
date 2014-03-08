@@ -39,49 +39,19 @@
 	</form>
 </div>
 <div class="row mail listing">
-	<label class="check-all"><input type="checkbox" data-ng-click="toggle()"> Toggle</label>
+	<label class="check-all" data-ng-click="toggle()">Toggle</label>
 	<ul class="list-unstyled">
 		<li ng-repeat="mail in mails | filter:query | orderBy:orderProp:reverse" >
 			<span ng-class="mail.show ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'" class="glyphicon action-btn unselectable" ng-click="toggleShow($event, $element)" scroll-if="mail.show"></span>
 			<span class="glyphicon glyphicon-remove-sign action-btn unselectable" ng-click="mail.deleteMark=true; delete()"></span>
-			<input type="checkbox" data-ng-model="mail.deleteMark" ng-init="mail.deltedMark=false" class="action-btn" >
-			<span class="title" id="{{mail.$$hashKey}}">{{mail.SUBJECT | formatName}}</span>
 			<span class="subject-detail">
+				<label id="{{mail.$$hashKey}}" class="title"><input type="checkbox" data-ng-model="mail.deleteMark" ng-init="mail.deltedMark=false" class="action-btn delete-marker">{{mail.SUBJECT | formatName}}</label>
 				<span class="label label-default date">{{mail.DATELASTMODIFIED | formatDate}}</span>
-				<div ng-class="mail.show ? 'show' : 'hide'" class="alert alert-info exceptions">
+				<div ng-class="mail.show ? 'show' : 'hide'" class="alert exceptions">
 					<div ng-bind-html="mail.BODY" class="body"></div>
 					<a class="collapse-btn" ng-click="mail.show=false"><span class="glyphicon glyphicon-chevron-up"></span> collapse</a>
 				</div>
 			</span>
 		</li>
 	</ul>
-<!-- 	<table class="table table-responsive phones">
-		<thead>
-			<tr class="table-header">
-				<th class="subject">Subject</th>
-			</tr>
-		</thead>
-		<tr ng-repeat="mail in mails | filter:query | orderBy:orderProp" class="mail-listing">
- 	 			<td nowrap>
-				<input type="checkbox" class="single-box" name="#name#">
-				<img src="/CFIDE/administrator/images/delete_button.gif" onclick="deleteEmail('#urlEncodedFormat(name)#', this)" alt="delete" title="delete" class="btn">
-			</td>
-			<td class="subject">
-				<a href="id-{{mail.ID}}">
-					<span ng-class="count ? 'glyphicon-collapse-down' : 'glyphicon-expand'" class="glyphicon" ng-click="count=(count + 1) % 2" ng-init="count=0"></span>
-				</a>
-				<span class="title">{{mail.SUBJECT | formatName}}</span>
-				<span class="subject-detail">
-					<span class="label label-default to">To: {{mail.TO}}</span>
-					<span class="label label-default date">{{mail.DATELASTMODIFIED | formatDate}}</span>
-					<div ng-class="count ? 'show' : 'hide'" class="alert alert-info exceptions">
-						<div ng-bind-html="mail.BODY"></div>
-						<a class="read-less" ng-click="count=0"><span class="glyphicon glyphicon-chevron-up"></span> collapse</a>
-					</div>
-				</span>
-			</td>
-		</tr>
-
-	</table> -->
-
  </div>
