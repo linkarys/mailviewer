@@ -71,7 +71,7 @@ component output="false" displayname=""  {
 			querySetCell(qryResult, "subject", mail.subject);
 			querySetCell(qryResult, "from", mail.from);
 			querySetCell(qryResult, "to", mail.to);
-			querySetCell(qryResult, "body", mail.body);
+			querySetCell(qryResult, "body", '');
 			querySetCell(qryResult, "dateLastModified", qryFile.dateLastModified[i]);
 			querySetCell(qryResult, "currentPage", getCurrentPage());
 			querySetCell(qryResult, "totalPage", getTotalPage());

@@ -37,16 +37,3 @@ angular.module('mailApp', [
 			}
 		};
 	})
-	.directive('scrollIf', function () {
-		return function (scope, element, attributes) {
-			// console.log(scope);
-			// console.log(element);
-			// console.log(attributes);
-			// console.log(scope.$eval(attributes.scrollIf));
-			setTimeout(function () {
-				if (scope.$eval(attributes.scrollIf)) {
-					window.scrollTo(0, element[0].offsetTop - 100)
-				}
-			});
-		}
-	});

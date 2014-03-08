@@ -1,8 +1,8 @@
 /* Controllers */
 
 var mailControllers = angular.module('mailControllers', [])
-	.controller('MailCtrl', ['$scope', 'Mail', '$location', '$anchorScroll',
-		function($scope, Mail, $location, $anchorScroll) {
+	.controller('MailCtrl', ['$scope', 'Mail', '$location', '$anchorScroll', '$sce', '$http',
+		function($scope, Mail, $location, $anchorScroll, $sce, $http) {
 			Mail.query({}, function(data) {
 				$scope.fetchContent(data);
 			});
@@ -25,23 +25,37 @@ var mailControllers = angular.module('mailControllers', [])
 				})
 			}
 
-			$scope.toggleShow = function(event) {
+			$scope.toggleShow = function(e) {
+				var mail = this.mail;
 
-				if (!this.mail.show) {
+				if (!mail.show) {
 					angular.forEach($scope.mails, function(mail) {
 						mail.show = false;
 					})
 				}
 
-				this.mail.show = !this.mail.show;
+				mail.show = !mail.show;
 
-				if (this.mail.show) {
-					elem = document.getElementById(this.mail.$$hashKey);
-					setTimeout(function(){
-						window.scrollTo(0, elem.offsetTop - 30)
-					}, 100);
+				if (mail.show) {
+
+					var elem = angular.element(e.srcElement)[0];
+					if (mail.BODY === '') {
+						$http.get('controller.cfm?action=show&mail=' + mail.NAME).success(function(data) {
+							mail.BODY = $sce.trustAsHtml(data);
+							$scope.scrollTo(elem);
+						})
+					} else {
+						$scope.scrollTo(elem);
+					}
 				}
 
+			}
+
+			$scope.scrollTo = function(target) {
+				var OFFSET_TOP = 30;
+				setTimeout(function(){
+					window.scrollTo(0, target.offsetTop - OFFSET_TOP)
+				}, 100);
 			}
 
 			$scope.updateDetails = function() {
@@ -183,11 +197,18 @@ var mailControllers = angular.module('mailControllers', [])
 			}
 		}
 	])
-	.controller('mailDetailCtrl', ['$scope', '$routeParams', 'Mail', '$sce',
-		function($scope, $routeParams, $Mail, $sce) {
+	.controller('mailDetailCtrl', ['$scope', '$routeParams', 'Mail', '$sce', '$http',
+		function($scope, $routeParams, Mail, $sce, $http) {
 
-			Mail.show({mail: $routeParams.mailId}, function(data) {
-				$scope.mail = $sce.trustAHtml(data);
+			// Mail.show({mail: $routeParams.mailId}, function(data) {
+			// 	console.log(data);
+			// 	$scope.mail = $sce.trustAsHtml(data);
+			// })
+
+			$http.get('controller.cfm?action=show&mail=' + $routeParams.mailId).success(function(data) {
+				// console.log(data);
+				$scope.mail = $sce.trustAsHtml(data);
+				console.log($scope.mail);
 			})
 
 		}]
