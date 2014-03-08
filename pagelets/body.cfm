@@ -9,7 +9,7 @@
 
 <cfoutput>
 	<!--- Basic Information --->
-	<div class="panel">
+	<div class="panel panel-primary">
 		<div class="panel-heading">Basic Information</div>
 
 		<cfset variables.keyLists = "Filename,Server,From,To,Cc,Bcc,Replyto,Failto">
@@ -28,7 +28,7 @@
 	</div>
 
 	<!--- Mail Detail --->
-	<div class="panel">
+	<div class="panel panel-primary">
 		<div class="panel-heading">Mail Details</div>
 		<div class="panel-body">
 			#replace(variables.mail.body, "<table>", "<table class='table'>")#
