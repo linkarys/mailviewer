@@ -1,8 +1,8 @@
 /* Controllers */
 
 var mailControllers = angular.module('mailControllers', [])
-	.controller('MailCtrl', ['$scope', 'Mail',
-		function($scope, Mail) {
+	.controller('MailCtrl', ['$scope', 'Mail', '$location', '$anchorScroll',
+		function($scope, Mail, $location, $anchorScroll) {
 			Mail.query({}, function(data) {
 				$scope.fetchContent(data);
 			});
@@ -23,6 +23,25 @@ var mailControllers = angular.module('mailControllers', [])
 				angular.forEach($scope.mails, function(mail) {
 					mail.deleteMark = !mail.deleteMark;
 				})
+			}
+
+			$scope.toggleShow = function(event) {
+
+				if (!this.mail.show) {
+					angular.forEach($scope.mails, function(mail) {
+						mail.show = false;
+					})
+				}
+
+				this.mail.show = !this.mail.show;
+
+				if (this.mail.show) {
+					elem = document.getElementById(this.mail.$$hashKey);
+					setTimeout(function(){
+						window.scrollTo(0, elem.offsetTop - 30)
+					}, 100);
+				}
+
 			}
 
 			$scope.updateDetails = function() {
