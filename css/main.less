@@ -46,8 +46,8 @@ body,
 
 
 .mail {
-	&.listing {
-		// min-height: 600px;
+	.panel {
+		background-color: transparent;
 	}
 	.date {
 		float: right;
@@ -59,8 +59,10 @@ body,
 	}
 
 	.alert {
-		color: #8A6D3B;
-		background-color: #FEFEFC;
+		.panel-heading {
+			color: #8A6D3B;
+		}
+		background-color: #fcfcfc;
 		border-color: #EEE;
 	}
 
@@ -78,10 +80,13 @@ body,
 			padding: 5px 0;
 			text-align: center;
 			font-weight: bold;
+			color: grey;
+			font-size: 15px;
 		}
 
 		tr, td, th {
 			padding: 5px;
+			border-color: #EFEFEF;
 		}
 	}
 
@@ -165,10 +170,6 @@ body,
 
 .btn-group-action {
 	border: none;
-}
-
-.check-all {
-	margin-left: 36px;
 }
 
 /**
