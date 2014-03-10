@@ -73,7 +73,7 @@ var mailControllers = angular.module('mailControllers', [])
 
 			$scope.fadeOut = function() {
 				$scope.mails = [];
-				// $scope.pages = [];
+				$scope.pages = [];
 			}
 
 			$scope.toPage = function(idx) {

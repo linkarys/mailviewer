@@ -1,6 +1,6 @@
 /* App Module */
 var MAX_LEN_NAME = 100;
-var OFFSET_TOP = -45;
+var OFFSET_TOP = -25;
 
 angular.module('mailApp', [
 	'ngRoute',

@@ -27,18 +27,32 @@ body,
 	user-select: none;
 }
 
-.ctrl-panel {
-	padding: 5px 0 15px;
+
+/**
+ * Top button group
+ * ----------------------------------------------------------------------------
+ */
+.btn-group-action {
+
+	.action-item {
+		color: #656565;
+		background-color: #fff;
+	}
 }
 
-.nav-bar {
-	padding: 5px 0 15px;
+#filter-box {
+	min-width: 300px;
+	margin-right: 15px;
+	border-radius: 8px;
 }
 
-#search-box {
-	margin: 0 18px 0 50px;
-	min-width: 280px;
+.breadcrumb {
+	padding: 7px 13px;
+	margin: 0 14px 10px 0;
+	background-color: #EFEFEF;
+	border-radius: 8px;
 }
+
 /**
  * Mail
  * ----------------------------------------------------------------------------
@@ -58,7 +72,7 @@ body,
 		margin: 3px 0;
 	}
 
-	.alert {
+	.well {
 		.panel-heading {
 			color: #8A6D3B;
 		}
@@ -138,39 +152,22 @@ body,
 }
 
 
+
 /**
  * Pagination
  * ----------------------------------------------------------------------------
  */
-.btn-group-action,
-.btn-group-pagination{
-	a {
-		color: #333;
-	}
-	border: 1px solid #ddd;
-	border-radius: 5px;
-	.btn,
-	.page {
-		background-color: #fff;
-		&.actived,
-		&:hover {
-			color: #333;
-			background-color: #EBEBEB;
-			border-color: #ADADAD;
-		}
-	}
 
-	.page {
-		border-radius: 5px !important;
-		&.actived {
-			border-color: #fff;
-		}
+.page {
+	color: #656565;
+	cursor: pointer;
+	margin: 0 2px;
+	&.actived {
+		background-color: #EBEBEB;
 	}
 }
 
-.btn-group-action {
-	border: none;
-}
+
 
 /**
  * Footer
