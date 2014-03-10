@@ -1,5 +1,5 @@
 angular.module('mailAnimations', ['ngAnimate'])
-	.animation('.phone', function() {
+	.animation('.mail-item', function() {
 		var animateUp = function(element, className, done) {
 			if (className != 'active') {
 				return;

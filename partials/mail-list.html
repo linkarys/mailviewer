@@ -1,6 +1,3 @@
-<div class="row">
-</div>
-
 <nav class="navbar navbar-default navbar-fixed-top ctrl-panel" role="navigation">
 	<div class="container-fluid">
 		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -19,7 +16,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<input ng-model="query" class="form-control" id="search-box" placeholder="search keyword">
+					<input ng-model="query" class="form-control" id="search-box" placeholder="filter">
 				</div>
 				<div class="form-group">
 					<label for="sort-by" class="control-label">Sort by</label>
@@ -32,30 +29,28 @@
 				</div>
 			</form>
 		</div><!-- /.navbar-collapse -->
-		<div class="row">
-		    <div class="col-md-offset-4">
-				<div class="btn-group unselectable btn-group-pagination">
-					<button class="btn" ng-click="toPage(1)">first</button>
-					<button class="btn" ng-click="prePage()">«</button>
-					<button class="btn page {{page.actived}}" ng-repeat="page in pages" ng-click="toPage(page.idx)">{{page.idx}}</button>
-					<button class="btn" ng-click="nextPage()">»</button>
-					<button class="btn" ng-click="toPage(totalPage)">last</button>
-					<button class="btn btn-group-addon"><span>{{ currentPage }} / {{ totalPage }}</span></button>
-				</div>
-		    </div>
-		</div>
-
 	</div><!-- /.container-fluid -->
+	<div class="row">
+		<div class="col-md-offset-4">
+			<div class="btn-group unselectable btn-group-pagination">
+				<button class="btn page {{page.actived}}" ng-repeat="page in pages" ng-click="toPage(page.idx)">{{page.label || page.idx}}</button>
+			</div>
+			<div class="btn-group">
+				<button class="btn btn-default"><span>{{ currentPage }} / {{ totalPage }}</span></button>
+			</div>
+		</div>
+	</div>
 </nav>
 
 <div class="row mail listing">
 	<label class="check-all" data-ng-click="toggle()">Toggle</label>
 	<ul class="list-unstyled">
-		<li ng-repeat="mail in mails | filter:query | orderBy:orderProp:reverse" >
-			<span ng-class="mail.show ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'" class="glyphicon action-btn unselectable" ng-click="toggleShow($event, $element)" scroll-if="mail.show"></span>
+		<li ng-repeat="mail in mails | filter:query | orderBy:orderProp:reverse" class="mail-item" >
+			<span ng-class="mail.show ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'" class="glyphicon action-btn unselectable" id="{{mail.$$hashKey}}" ng-click="toggleShow($event, $element)" scroll-if="mail.show"></span>
 			<span class="glyphicon glyphicon-remove-sign action-btn unselectable" ng-click="mail.deleteMark=true; delete()"></span>
+			<input type="checkbox" data-ng-model="mail.deleteMark" ng-init="mail.deltedMark=false" class="action-btn delete-marker">
 			<span class="subject-detail">
-				<label id="{{mail.$$hashKey}}" class="title"><input type="checkbox" data-ng-model="mail.deleteMark" ng-init="mail.deltedMark=false" class="action-btn delete-marker">{{mail.SUBJECT | formatName}}</label>
+				<span ng-click="toggleShow($event, $element)" class="title">{{mail.SUBJECT | formatName}}</span>
 				<span class="label label-default date">{{mail.DATELASTMODIFIED | formatDate}}</span>
 				<div ng-class="mail.show ? 'show' : 'hide'" class="alert exceptions">
 					<div ng-bind-html="mail.BODY" class="body"></div>
@@ -64,4 +59,4 @@
 			</span>
 		</li>
 	</ul>
- </div>
+</div>

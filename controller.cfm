@@ -53,6 +53,7 @@
 					for(item in qryFile) {
 						fileDelete(application.maildir & '/'  & URLDecode(item.Name));
 					}
+					udf.setCurrentPage(1);
 				}
 				catch(any e) {
 					writeOutput(0);
@@ -63,8 +64,10 @@
 			<cfscript>
 				// get the pagination to go
 				switch(url.action){
-					case 'list':
+					case 'list': {
+						udf.setCurrentPage(1);
 						url.idx = udf.getCurrentPage();
+					}
 					break;
 					case 'prePage': {
 						if (udf.getCurrentPage() gt 1) {

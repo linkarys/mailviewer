@@ -19,6 +19,10 @@ var mailControllers = angular.module('mailControllers', [])
 				$scope.updateDetails();
 			}
 
+			$scope.refresh = function() {
+				location.reload();
+			}
+
 			$scope.toggle = function() {
 				angular.forEach($scope.mails, function(mail) {
 					mail.deleteMark = !mail.deleteMark;
@@ -70,34 +74,20 @@ var mailControllers = angular.module('mailControllers', [])
 				})
 			}
 
-			$scope.prePage = function() {
-				if ($scope.getCurrentPage() === 1) return;
-
+			$scope.fadeOut = function() {
 				$scope.mails = [];
-				Mail.pre({}, function(data) {
-					$scope.fetchContent(data, true);
-				});
+				// $scope.pages = [];
 			}
 
 			$scope.toPage = function(idx) {
 
 				if ($scope.getCurrentPage() === idx) return;
 
-				$scope.mails = [];
+				$scope.fadeOut();
 
 				Mail.toPage({idx: idx}, function(data) {
 					$scope.fetchContent(data, true);
 				})
-			}
-
-			$scope.nextPage = function() {
-				if ($scope.getCurrentPage() === $scope.getTotalPage()) return;
-
-				$scope.mails = [];
-
-				Mail.next({}, function(data) {
-					$scope.fetchContent(data);
-				});
 			}
 
 			$scope.delete = function() {
@@ -118,6 +108,7 @@ var mailControllers = angular.module('mailControllers', [])
 					Mail.concat({concatLen: emailToDelete.length}, function(data) {
 						$scope.fetchContent(data, true);
 						$scope.checkEmpty();
+						// $scope.pages = [];
 					})
 				})
 			}
@@ -126,7 +117,7 @@ var mailControllers = angular.module('mailControllers', [])
 				var msg = 'Are you sure to delete all emails?';
 				if (window.confirm(msg)) {
 					Mail.deleteAll({}, function(status) {
-						$scope.mails = [];
+						$scope.fadeOut();
 					});
 				}
 			}
@@ -174,9 +165,44 @@ var mailControllers = angular.module('mailControllers', [])
 				start = start < 1 ? 1 : start;
 				end = end > $scope.totalPage ? $scope.totalPage : end;
 
+				if ($scope.currentPage > 1) {
+					if (start !== 1) {
+						page = {
+							idx: 1,
+							label: 'first'
+						}
+						pages.push(page);
+					}
+
+					page = {
+						idx: $scope.currentPage - 1,
+						label: '«'
+					}
+
+					pages.push(page);
+					page = {};
+				}
+
 				for (var i = start; i <= end; i++) {
 					page.idx = i;
 					pages.push(page);
+					page = {};
+				}
+
+				if ($scope.currentPage < $scope.totalPage) {
+					page = {
+						idx: $scope.currentPage + 1,
+						label: '»'
+					}
+					pages.push(page);
+
+					if (end !== $scope.totalPage) {
+						page = {
+							idx: $scope.totalPage,
+							label: 'last'
+						}
+						pages.push(page);
+					}
 					page = {};
 				}
 

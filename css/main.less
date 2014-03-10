@@ -9,7 +9,7 @@ table {
 }
 
 #wrapper  {
-	margin-right: auto;
+	padding-top: 120px;
 	margin: 0px auto;
 	width: 95%;
 }
@@ -46,9 +46,8 @@ body,
 
 
 .mail {
-	padding-top: 120px;
 	&.listing {
-		min-height: 600px;
+		// min-height: 600px;
 	}
 	.date {
 		float: right;
@@ -121,7 +120,11 @@ body,
 	}
 
 	.title {
+		cursor: default;
 		font-weight: normal;
+		&:hover {
+			color: #E99;
+		}
 	}
 
 	.mail-text {
@@ -156,18 +159,6 @@ body,
 		border-radius: 5px !important;
 		&.actived {
 			border-color: #fff;
-		}
-	}
-
-	.btn-group-addon {
-		font-weight: 400;
-		color: #555;
-		background-color: #EEE;
-		border-radius: 4px;
-		&:hover {
-			color: #555;
-			background-color: #EEE;
-			border-color: #ccc;
 		}
 	}
 }
