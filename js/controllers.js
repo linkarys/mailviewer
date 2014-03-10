@@ -41,16 +41,13 @@ var mailControllers = angular.module('mailControllers', [])
 				mail.show = !mail.show;
 
 				if (mail.show) {
-
 					var elem = angular.element(e.srcElement)[0];
-					if (mail.BODY === '') {
+					if (!mail.BODY) {
 						$http.get('controller.cfm?action=show&mail=' + mail.NAME).success(function(data) {
 							mail.BODY = $sce.trustAsHtml(data);
-							$scope.scrollTo(elem);
 						})
-					} else {
-						$scope.scrollTo(elem);
 					}
+					$scope.scrollTo(elem);
 				}
 
 			}
