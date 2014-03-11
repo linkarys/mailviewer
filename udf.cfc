@@ -8,13 +8,20 @@
 
 component output="false" displayname=""  {
 
-	this.DEFULT_STARTROW = 1;
 	this.DEFULT_PERPAGE = 10;
-	this.DEFULT_MAXPAGE = 7;
+	this.MIN_PERPAGE = 1;
+	this.MAX_PERPAGE = 100;
+
+	this.DEFULT_MAXPAGES = 7;
+	this.MIN_MAXPAGES = 1;
+	this.MAX_MAXPAGES = 15;
+
+	this.DEFULT_STARTROW = 1;
 	this.DEFAULT_CONCATLEN = 1;
 
 	public function init(){
-		var variables.configFile = XmlParse(ExpandPath('.') & "/settings.xml");
+		variables.settingPath = ExpandPath('.') & "/settings.xml";
+		variables.configFile = XmlParse(settingPath);
 		return this;
 	}
 
@@ -141,12 +148,33 @@ component output="false" displayname=""  {
 		}
 	}
 
+	public boolean function updateSettings(stcSettings=structNew()) {
+		var perpage = getArgValue(arguments.stcSettings, 'perpage');
+		var maxpages = getArgValue(arguments.stcSettings, 'maxpages');
+
+		try {
+			if (perpage gte this.MIN_PERPAGE and perpage lte this.MAX_PERPAGE) {
+				variables.configFile.main.perpage.XmlText = perpage;
+			}
+
+			if (maxpages gte this.MIN_MAXPAGES and maxpages lte this.MAX_MAXPAGES) {
+				variables.configFile.main.maxpage.XmlText = maxpages;
+			}
+
+			fileWrite(variables.settingPath, toString(variables.configFile));
+
+			return 1;
+		} catch(any e) {
+			return false;
+		}
+	}
+
 	public string function getMaxpage() {
 		try {
 			return variables.configFile.main.maxpage.XmlText;
 		}
 		catch(any e) {
-			return this.DEFULT_MAXPAGE;
+			return this.DEFULT_MAXPAGES;
 		}
 	}
 

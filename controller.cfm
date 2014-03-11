@@ -46,6 +46,19 @@
 				}
 			</cfscript>
 		</cfcase>
+		<cfcase value="updateSettings">
+			<cfscript>
+				stcSettings = structNew();
+				stcSettings.perpage = udf.getArgValue(url, 'perpage');
+				stcSettings.maxpages = udf.getArgValue(url, 'maxpages');
+
+				if (udf.updateSettings(stcSettings)) {
+					writeOutput(1);
+				} else {
+					writeOutput(0);
+				}
+			</cfscript>
+		</cfcase>
 		<cfcase value="deleteAll">
 			<cfscript>
 				qryFile = udf.getFileList();

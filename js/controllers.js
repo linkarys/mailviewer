@@ -23,6 +23,17 @@ var mailControllers = angular.module('mailControllers', [])
 				location.reload();
 			}
 
+			$scope.updateSettings = function() {
+				if ($scope.perpage && $scope.maxpages) {
+					Mail.updateSettings({perpage: $scope.perpage, maxpages: $scope.maxpages}, function(status) {
+						$scope.fadeOut();
+						Mail.query({}, function(data) {
+							$scope.fetchContent(data);
+						});
+					})
+				}
+			}
+
 			$scope.toggle = function() {
 				angular.forEach($scope.mails, function(mail) {
 					mail.deleteMark = !mail.deleteMark;
@@ -62,7 +73,7 @@ var mailControllers = angular.module('mailControllers', [])
 				if ($scope.mails && $scope.mails.length) {
 					$scope.currentPage = $scope.getCurrentPage();
 					$scope.totalPage = $scope.getTotalPage();
-					$scope.maxPage = $scope.getMaxPage();
+					$scope.maxpages = $scope.getMaxPages();
 					$scope.perpage = $scope.getPerpage();
 					$scope.pages = $scope.getPages();
 				}
@@ -143,7 +154,7 @@ var mailControllers = angular.module('mailControllers', [])
 				return 0;
 			}
 
-			$scope.getMaxPage = function() {
+			$scope.getMaxPages = function() {
 				if ($scope.mails.length) {
 					return $scope.mails[$scope.mails.length-1]['MAXPAGE'];
 				}
@@ -158,8 +169,8 @@ var mailControllers = angular.module('mailControllers', [])
 			}
 
 			$scope.getPages = function () {
-				var offsetStart = Math.floor(($scope.maxPage - 1) / 2),
-					offsetEnd = ($scope.maxPage - 1) - offsetStart,
+				var offsetStart = Math.floor(($scope.maxpages - 1) / 2),
+					offsetEnd = ($scope.maxpages - 1) - offsetStart,
 					page = {},
 					pages = [];
 

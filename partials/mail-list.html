@@ -45,18 +45,18 @@
 			<div class="form-group">
 				<label for="perpage" class="col-sm-4 control-label">Perpage</label>
 				<div class="col-sm-7">
-					<input type="number" class="form-control" id="perpage" value="{{ perpage }}">
+					<input type="number" class="form-control" id="perpage" min="1" max="100" ng-model="perpage">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="pages" class="col-sm-4 control-label">Pages</label>
 				<div class="col-sm-7">
-					<input type="number" class="form-control" id="pages" value="{{ maxPage }}">
+					<input type="number" class="form-control" ng-model="maxpages" min="1" max="15">
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-sm-7">
-					<button type="submit" class="btn btn-default">Submit</button>
+				<div class="col-sm-7 col-sm-offset-3">
+					<button type="submit" class="btn btn-default" ng-click="updateSettings()">Apply</button>
 				</div>
 			</div>
 			<label><span class="mail-sidectrl glyphicon" ng-class="sidebarChecked ? 'glyphicon-chevron-left' : 'glyphicon-chevron-right'"></span><input type="checkbox" ng-model="sidebarChecked" class="btn-sidectrl"></label>

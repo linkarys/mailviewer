@@ -12,5 +12,6 @@ angular.module('mailServices', ['ngResource'])
 			toPage: {method:'GET', params:{action:'toPage'}, isArray: false},
 			deleteAll: {method:'GET', params:{action:'deleteAll'}, isArray: false},
 			deleteList: {method:'GET', params:{action:'deleteList'}, isArray: false},
+			updateSettings: {method:'GET', params:{action:'updateSettings'}, isArray: false},
 		});
 	}]);
