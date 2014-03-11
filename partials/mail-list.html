@@ -13,7 +13,7 @@
 
 			<form class="navbar-form navbar-right">
 				<input ng-model="query" class="form-control" id="filter-box" placeholder="Filter...">
-<!-- 				<label for="sort-by" class="control-label">Sort by: </label>
+				<!-- <label for="sort-by" class="control-label">Sort by: </label>
 				<select ng-model="orderProp" class="form-control" id="sort-by">
 					<option value="SUBJECT">Subject</option>
 					<option value="FROM">Sender</option>
@@ -38,23 +38,49 @@
 	</div>
 </div>
 
-<div class="row mail listing">
-	<ul class="list-unstyled">
-		<li ng-repeat="mail in mails | filter:query | orderBy:orderProp:reverse" class="mail-item" >
-			<span ng-class="mail.show ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'" class="glyphicon action-btn unselectable" id="{{mail.$$hashKey}}" ng-click="toggleShow($event, $element)" scroll-if="mail.show"></span>
-			<span class="glyphicon glyphicon-remove-sign action-btn unselectable" ng-click="mail.deleteMark=true; delete()"></span>
-			<input type="checkbox" data-ng-model="mail.deleteMark" ng-init="mail.deltedMark=false" class="action-btn delete-marker">
-			<span class="subject-detail">
-				<span ng-click="toggleShow($event, $element)" class="title">{{mail.SUBJECT | formatName}}</span>
-				<span class="label label-default date">{{mail.DATELASTMODIFIED | formatDate}}</span>
-				<div ng-class="mail.show ? 'show' : 'hide'" class="well exceptions">
-					<div ng-bind-html="mail.BODY" class="body"></div>
-					<a class="collapse-btn" ng-click="mail.show=false"><span class="glyphicon glyphicon-chevron-up"></span> collapse</a>
+<div class="row">
+	<div class="col-sm-3 col-md-2 mail-sidebar" ng-show="sidebarChecked">
+		<div class="sidebar-holder"></div>
+		<form class="form-horizontal settings" role="form">
+			<div class="form-group">
+				<label for="perpage" class="col-sm-4 control-label">Perpage</label>
+				<div class="col-sm-7">
+					<input type="number" class="form-control" id="perpage" value="{{ perpage }}">
 				</div>
-			</span>
-		</li>
-	</ul>
+			</div>
+			<div class="form-group">
+				<label for="pages" class="col-sm-4 control-label">Pages</label>
+				<div class="col-sm-7">
+					<input type="number" class="form-control" id="pages" value="{{ maxPage }}">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-7">
+					<button type="submit" class="btn btn-default">Submit</button>
+				</div>
+			</div>
+			<label><span class="mail-sidectrl glyphicon" ng-class="sidebarChecked ? 'glyphicon-chevron-left' : 'glyphicon-chevron-right'"></span><input type="checkbox" ng-model="sidebarChecked" class="btn-sidectrl"></label>
+		</form>
+	</div>
+	<div class="mail listing">
+		<ul class="list-unstyled">
+			<li ng-repeat="mail in mails | filter:query | orderBy:orderProp:reverse" class="mail-item" >
+				<span ng-class="mail.show ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'" class="glyphicon action-btn unselectable" id="{{mail.$$hashKey}}" ng-click="toggleShow($event, $element)" scroll-if="mail.show"></span>
+				<span class="glyphicon glyphicon-remove-sign action-btn unselectable" ng-click="mail.deleteMark=true; delete()"></span>
+				<input type="checkbox" data-ng-model="mail.deleteMark" ng-init="mail.deltedMark=false" class="action-btn delete-marker">
+				<span class="subject-detail">
+					<span ng-click="toggleShow($event, $element)" class="title">{{mail.SUBJECT | formatName}}</span>
+					<span class="label label-default date">{{mail.DATELASTMODIFIED | formatDate}}</span>
+					<div ng-class="mail.show ? 'show' : 'hide'" class="well exceptions">
+						<div ng-bind-html="mail.BODY" class="body"></div>
+						<a class="collapse-btn" ng-click="mail.show=false"><span class="glyphicon glyphicon-chevron-up"></span> collapse</a>
+					</div>
+				</span>
+			</li>
+		</ul>
+	</div>
 </div>
+
 
 <ul class="pager">
 	<li><a class="page {{page.actived}}" ng-repeat="page in pages" ng-click="toPage(page.idx)">{{page.label || page.idx}}</a></li>

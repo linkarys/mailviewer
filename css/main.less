@@ -9,7 +9,7 @@ table {
 }
 
 #wrapper  {
-	padding-top: 120px;
+	padding: 120px 0 0 5px;
 	margin: 0px auto;
 	width: 95%;
 }
@@ -49,9 +49,63 @@ body,
 .breadcrumb {
 	padding: 7px 13px;
 	margin: 0 14px 10px 0;
-	background-color: #EFEFEF;
 	border-radius: 8px;
 }
+
+.navbar {
+	padding-left: 10px;
+}
+
+/**
+ * Mail Side bar
+ * ----------------------------------------------------------------------------
+ */
+
+.mail-sidebar {
+	height: 100%;
+	width: 200px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10000;
+	background-color: #F8F8F8;
+	border-right: solid 1px #DDD;
+	padding: 0;
+	box-shadow: 10px 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.settings {
+	text-align: center;
+	padding: 40px 0 0px 12px;
+	height: 100%;
+	color: #636564;
+	background-color: #EFF5F3;
+	vertical-align: middle;
+}
+
+.sidebar-holder {
+	height: 95px;
+	width: 100%;
+	border-bottom: solid 1px #E7E7E7;
+}
+
+.mail-sidectrl {
+	position: absolute;
+	right: 0;
+	color: #888;
+	top: 291px;
+	padding: 28px 1px;
+	background-color: #DFE8EB;
+	cursor: pointer;
+	&:hover {
+		background-color: #9DD6C5;
+	}
+}
+
+.btn-sidectrl {
+	display: none;
+}
+
 
 /**
  * Mail

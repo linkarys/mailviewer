@@ -1,34 +1,45 @@
 .mail-item.ng-enter,
 .mail-item.ng-leave,
 .mail-item.ng-move {
-  -webkit-transition: 0.5s linear all;
-  -moz-transition: 0.5s linear all;
-  -o-transition: 0.5s linear all;
-  transition: 0.5s linear all;
+	-webkit-transition: 0.5s linear all;
+	-moz-transition: 0.5s linear all;
+	-o-transition: 0.5s linear all;
+	transition: 0.5s linear all;
 }
 
 .mail-item.ng-enter,
 .mail-item.ng-move {
-  opacity: 0;
-  height: 0;
-  overflow: hidden;
+	opacity: 0;
+	height: 0;
+	overflow: hidden;
 }
 
 .mail-item.ng-move.ng-move-active,
 .mail-item.ng-enter.ng-enter-active {
-  opacity: 1;
-  height: 30px;
+	opacity: 1;
+	height: 30px;
 }
 
 .mail-item.ng-leave {
-  opacity: 1;
-  overflow: hidden;
-  height: 25px;
+	opacity: 1;
+	overflow: hidden;
+	height: 25px;
 }
 
 .mail-item.ng-leave.ng-leave-active {
-  opacity: 0;
-  height: 0;
-  padding-top: 0;
-  padding-bottom: 0;
+	opacity: 0;
+	height: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+
+.mail-sidebar {
+	-webkit-transition:all linear 0.4s;
+	transition:all linear 0.4s;
+}
+
+.mail-sidebar.ng-hide {
+	display:block!important;
+	left: -186;
 }

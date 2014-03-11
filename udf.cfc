@@ -100,7 +100,7 @@ component output="false" displayname=""  {
 
 	public query function getMails(numeric startRow, numeric maxRows) {
 		var qryFile = getFileList();
-		var qryResult = queryNew("name,subject,from,to,body,dateLastModified,currentPage,totalPage,maxpage", 'varchar,varchar,varchar,varchar,varchar,date,varchar,varchar,varchar');
+		var qryResult = queryNew("name,subject,from,to,body,dateLastModified,currentPage,totalPage,maxpage,perpage", 'varchar,varchar,varchar,varchar,varchar,date,varchar,varchar,varchar,varchar');
 
 		for(i = startRow; (i lte qryFile.recordCount) and (i lt (startRow + maxRows)); i=i+1) {
 			mail = getMail(qryFile.name[i], true);
@@ -113,6 +113,7 @@ component output="false" displayname=""  {
 			querySetCell(qryResult, "dateLastModified", qryFile.dateLastModified[i]);
 			querySetCell(qryResult, "currentPage", getCurrentPage());
 			querySetCell(qryResult, "totalPage", getTotalPage());
+			querySetCell(qryResult, "perpage", getPerpage());
 			querySetCell(qryResult, "maxpage", getMaxpage());
 		}
 

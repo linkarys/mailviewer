@@ -62,6 +62,8 @@ var mailControllers = angular.module('mailControllers', [])
 				if ($scope.mails && $scope.mails.length) {
 					$scope.currentPage = $scope.getCurrentPage();
 					$scope.totalPage = $scope.getTotalPage();
+					$scope.maxPage = $scope.getMaxPage();
+					$scope.perpage = $scope.getPerpage();
 					$scope.pages = $scope.getPages();
 				}
 
@@ -141,10 +143,23 @@ var mailControllers = angular.module('mailControllers', [])
 				return 0;
 			}
 
+			$scope.getMaxPage = function() {
+				if ($scope.mails.length) {
+					return $scope.mails[$scope.mails.length-1]['MAXPAGE'];
+				}
+				return 0;
+			}
+
+			$scope.getPerpage = function() {
+				if ($scope.mails.length) {
+					return $scope.mails[$scope.mails.length-1]['PERPAGE'];
+				}
+				return 0;
+			}
+
 			$scope.getPages = function () {
-				var maxPages = $scope.mails[$scope.mails.length-1]['MAXPAGE'],
-					offsetStart = Math.floor((maxPages - 1) / 2),
-					offsetEnd = (maxPages - 1) - offsetStart,
+				var offsetStart = Math.floor(($scope.maxPage - 1) / 2),
+					offsetEnd = ($scope.maxPage - 1) - offsetStart,
 					page = {},
 					pages = [];
 
