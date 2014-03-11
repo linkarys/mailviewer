@@ -56,17 +56,27 @@ var mailControllers = angular.module('mailControllers', [])
 					if (!mail.BODY) {
 						$http.get('controller.cfm?action=show&mail=' + mail.NAME).success(function(data) {
 							mail.BODY = $sce.trustAsHtml(data);
+							$scope.scrollTo(elem);
 						})
+					} else {
+						$scope.scrollTo(elem);
 					}
-					$scope.scrollTo(elem);
 				}
 
 			}
 
-			$scope.scrollTo = function(target) {
-				setTimeout(function(){
-					window.scrollTo(0, target.offsetTop - MAX_LEN_NAME + OFFSET_TOP)
-				}, 100);
+			$scope.scrollTo = function(target, speed) {
+				var speed = speed || 200;
+				var step = (target.offsetTop - MAX_LEN_NAME + OFFSET_TOP) / speed;
+
+				for (var i = 0; i <= speed;) {
+					(function() {
+						var to = step * i;
+						setTimeout(function() {
+							window.scrollTo(0, to);
+						}, ++i)
+					})();
+				}
 			}
 
 			$scope.updateDetails = function() {
