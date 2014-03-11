@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <main>
-	<perpage>15</perpage>
-	<maxpage>7</maxpage>
+	<perpage>100</perpage>
+	<maxpage>10</maxpage>
 </main>
