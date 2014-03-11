@@ -1,3 +1,26 @@
+
+/**
+ * Side Bar
+ * ----------------------------------------------------------------------------
+ */
+
+.mail-sidebar {
+	-webkit-transition:all linear 0.4s;
+	transition:all linear 0.4s;
+}
+
+.mail-sidebar.ng-hide {
+	display:block!important;
+	right: -183;
+}
+
+
+/**
+ * Mail item
+ * ----------------------------------------------------------------------------
+ */
+
+
 .mail-item.ng-enter,
 .mail-item.ng-leave,
 .mail-item.ng-move {
