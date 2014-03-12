@@ -1,11 +1,9 @@
-<cfparam name="mail" type="string" default="">
-
-<cfif not structKeyExists(attributes, "mail")>
+<cfif not structKeyExists(url, "mail")>
 	<h2 class="page-header">Invalid!</h2>
 	<cfabort>
 </cfif>
 
-<cfset variables.mail = request.udf.getMail(attributes.mail, true)>
+<cfset variables.mail = request.udf.getMail(url.mail, true)>
 
 <cfoutput>
 	<!--- Basic Information --->

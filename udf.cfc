@@ -21,6 +21,7 @@ component output="false" displayname=""  {
 
 	public function init(){
 		variables.settingPath = ExpandPath('.') & "/settings.xml";
+		variables.dataPath = ExpandPath('.') & "/data/data.js";
 		variables.configFile = XmlParse(settingPath);
 		return this;
 	}
@@ -105,9 +106,14 @@ component output="false" displayname=""  {
 		return directoryList(application.maildir, false, "query", "*.cfmail", "datelastmodified desc");
 	}
 
-	public query function getMails(numeric startRow, numeric maxRows) {
+	public query function getMails(numeric startRow, numeric maxRows, boolean all=false) {
 		var qryFile = getFileList();
 		var qryResult = queryNew("name,subject,from,to,body,dateLastModified,currentPage,totalPage,maxpage,perpage", 'varchar,varchar,varchar,varchar,varchar,date,varchar,varchar,varchar,varchar');
+
+		if (arguments.all) {
+			startRow = 1;
+			maxRows = qryfile.recordCount;
+		}
 
 		for(i = startRow; (i lte qryFile.recordCount) and (i lt (startRow + maxRows)); i=i+1) {
 			mail = getMail(qryFile.name[i], true);
@@ -163,11 +169,23 @@ component output="false" displayname=""  {
 
 			fileWrite(variables.settingPath, toString(variables.configFile));
 
-			return 1;
+			return true;
 		} catch(any e) {
 			return false;
 		}
 	}
+
+	public boolean function buildJson() {
+
+		try {
+			fileWrite(variables.dataPath,  toString(serializeJSON(getMails(0, 0, true))));
+			return true;
+		}
+		catch(any e) {
+			return false;
+		}
+	}
+
 
 	public string function getMaxpage() {
 		try {

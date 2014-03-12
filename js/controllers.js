@@ -143,10 +143,12 @@ var mailControllers = angular.module('mailControllers', [])
 			}
 
 			$scope.checkEmpty = function() {
-				if (!$scope.mails.length) {
-					Mail.pre({}, function(data) {
+				while (!$scope.mails.length) {
+					if ($scope.currentPage == 1) break;
+
+					Mail.toPage({idx: $scope.currentPage - 1}, function(data) {
 						$scope.fetchContent(data, true);
-					});
+					})
 				}
 			}
 
