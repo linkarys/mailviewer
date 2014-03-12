@@ -66,12 +66,13 @@ var mailControllers = angular.module('mailControllers', [])
 			}
 
 			$scope.scrollTo = function(target, speed) {
-				var speed = speed || 200;
-				var step = (target.offsetTop - MAX_LEN_NAME + OFFSET_TOP) / speed;
+				var speed = speed || 200,
+					start = window.scrollY,
+					step = (target.offsetTop - MAX_LEN_NAME + OFFSET_TOP - start) / speed;
 
 				for (var i = 0; i <= speed;) {
 					(function() {
-						var to = step * i;
+						var to = start + step * i;
 						setTimeout(function() {
 							window.scrollTo(0, to);
 						}, ++i)

@@ -19,9 +19,13 @@ component output="false" displayname=""  {
 	this.DEFULT_STARTROW = 1;
 	this.DEFAULT_CONCATLEN = 1;
 
+	this.JSON_MODE = 1;
+	this.DB_MODE = 1;
+
 	public function init(){
 		variables.settingPath = ExpandPath('.') & "/settings.xml";
 		variables.dataPath = ExpandPath('.') & "/data/data.js";
+		variables.mode = this.DB_MODE;
 		variables.configFile = XmlParse(settingPath);
 		return this;
 	}
@@ -106,11 +110,11 @@ component output="false" displayname=""  {
 		return directoryList(application.maildir, false, "query", "*.cfmail", "datelastmodified desc");
 	}
 
-	public query function getMails(numeric startRow, numeric maxRows, boolean all=false) {
+	public query function getMails(numeric startRow=1, numeric maxRows=this.MAX_PERPAGE) {
 		var qryFile = getFileList();
 		var qryResult = queryNew("name,subject,from,to,body,dateLastModified,currentPage,totalPage,maxpage,perpage", 'varchar,varchar,varchar,varchar,varchar,date,varchar,varchar,varchar,varchar');
 
-		if (arguments.all) {
+		if (variables.mode eq this.JSON_MODE) {
 			startRow = 1;
 			maxRows = qryfile.recordCount;
 		}
@@ -178,7 +182,8 @@ component output="false" displayname=""  {
 	public boolean function buildJson() {
 
 		try {
-			fileWrite(variables.dataPath,  toString(serializeJSON(getMails(0, 0, true))));
+			variables.mode = this.JSON_MODE;
+			fileWrite(variables.dataPath,  toString( serializeJSON( getMails() ) ) );
 			return true;
 		}
 		catch(any e) {
