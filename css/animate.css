@@ -5,8 +5,8 @@
  */
 
 .mail-sidebar {
-	-webkit-transition:all linear 0.4s;
-	transition:all linear 0.4s;
+	-webkit-transition:all linear 0.25s;
+	transition:all linear 0.25s;
 }
 
 .mail-sidebar.ng-hide {

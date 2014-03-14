@@ -4,8 +4,8 @@
  */
 
 
-table {
-	font-size: 1em;
+body{
+	color: #555;
 }
 
 #wrapper  {
@@ -14,9 +14,9 @@ table {
 	width: 95%;
 }
 
-body,
-.btn {
-	color: #555;
+
+table {
+	font-size: 1em;
 }
 
 .unselectable{
@@ -29,11 +29,24 @@ body,
 
 
 /**
- * Top button group
+ * Nav bar
  * ----------------------------------------------------------------------------
  */
-.btn-group-action {
 
+
+ .navbar {
+ 	padding-left: 10px;
+ 	box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.1);
+ }
+
+ .navbar-form {
+ 	padding: 10px 15px;
+ 	margin: 0 0 0 -15px;
+ 	border: none;
+ }
+
+.btn-group-action {
+	float: left;
 	.action-item {
 		color: #656565;
 		background-color: #fff;
@@ -50,12 +63,9 @@ body,
 	padding: 7px 13px;
 	margin: 0 14px 10px 0;
 	border-radius: 8px;
+	float: right;
 }
 
-.navbar {
-	padding-left: 10px;
-	box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.1);
-}
 
 /**
  * Mail Side bar
@@ -77,7 +87,7 @@ body,
 
 .settings {
 	text-align: center;
-	padding: 40px 0 0px 18px;
+	padding: 55px 0 0px 18px;
 	height: 100%;
 	color: #636564;
 	background-color: #EFF5F3;
@@ -115,25 +125,52 @@ body,
 
 
 .mail {
-	.panel {
-		background-color: transparent;
-	}
-	.date {
-		float: right;
+
+	.well {
+		background-color: #fcfcfc;
+		border-color: #EEE;
 	}
 
-	li {
+	.panel {
+		background-color: transparent;
+		border: 1px solid #EFEFEF;
+	}
+
+	.panel-body {
+		padding: 15px;
+		overflow: auto;
+		.table {
+			margin-bottom: 0;
+			th,tr,td {
+				padding: 3px;
+				border: none !important;
+			}
+		}
+	}
+
+	.date {
+		position: absolute;
+		right: 34px;
+	}
+
+	.mail-item {
 		border-bottom: 1px solid #ccc;
 		margin: 3px 0;
 	}
 
-	.well {
-		.panel-heading {
-			color: #8A6D3B;
+	.basic-info {
+		background: #FFFFF0;
+		box-shadow: 6px 5px 10px 0 rgba(0, 0, 0, 0.1);
+		.table {
+			width: 70%;
 		}
-		background-color: #fcfcfc;
-		border-color: #EEE;
 	}
+
+	.main-content {
+		background: #F0FFFF;
+		box-shadow: 6px 5px 10px 0 rgba(0, 0, 0, 0.1);
+	}
+
 
 	.body {
 		margin-bottom: 9px;
@@ -144,24 +181,6 @@ body,
 		.hide {
 			display: none;
 		}
-
-		.panel-heading {
-			padding: 5px 0;
-			text-align: center;
-			font-weight: bold;
-			color: grey;
-			font-size: 15px;
-		}
-
-		tr, td, th {
-			padding: 5px;
-			border-color: #EFEFEF;
-		}
-	}
-
-	.panel-body {
-		padding: 0;
-		overflow: auto;
 	}
 
 	.action-btn {
@@ -203,6 +222,8 @@ body,
 
 	.mail-text {
 		margin: 0;
+		background-color: transparent;
+		border: none;
 	}
 }
 
@@ -219,24 +240,5 @@ body,
 	margin: 0 2px;
 	&.actived {
 		background-color: #EBEBEB;
-	}
-}
-
-
-
-/**
- * Footer
- * ----------------------------------------------------------------------------
- */
-
-
-.footer {
-	text-align: center;
-	display: block;
-	overflow: hidden;
-	margin: 0 auto;
-	& li {
-		overflow: hidden;
-		width: auto;
 	}
 }

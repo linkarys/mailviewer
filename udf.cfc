@@ -10,7 +10,7 @@ component output="false" displayname=""  {
 
 	this.DEFULT_PERPAGE = 10;
 	this.MIN_PERPAGE = 1;
-	this.MAX_PERPAGE = 100;
+	this.MAX_PERPAGE = 200;
 
 	this.DEFULT_MAXPAGES = 7;
 	this.MIN_MAXPAGES = 1;
@@ -19,8 +19,8 @@ component output="false" displayname=""  {
 	this.DEFULT_STARTROW = 1;
 	this.DEFAULT_CONCATLEN = 1;
 
+	this.DB_MODE = 0;
 	this.JSON_MODE = 1;
-	this.DB_MODE = 1;
 
 	public function init(){
 		variables.settingPath = ExpandPath('.') & "/settings.xml";
@@ -120,7 +120,7 @@ component output="false" displayname=""  {
 		}
 
 		for(i = startRow; (i lte qryFile.recordCount) and (i lt (startRow + maxRows)); i=i+1) {
-			mail = getMail(qryFile.name[i], true);
+			mail = getMail(qryFile.name[i], false);
 			queryAddRow(qryResult);
 			querySetCell(qryResult, "name", qryFile.name[i]);
 			querySetCell(qryResult, "subject", mail.subject);
@@ -188,6 +188,12 @@ component output="false" displayname=""  {
 		}
 		catch(any e) {
 			return false;
+		}
+	}
+
+	public void function setMode(mode) {
+		if (arguments.mode eq this.JSON_MODE OR arguments.mode eq this.DB_MODE) {
+			variables.mode = arguments.mode;
 		}
 	}
 

@@ -1,6 +1,6 @@
 /* App Module */
 var MAX_LEN_NAME = 100;
-var OFFSET_TOP = -25;
+var OFFSET_TOP = -30;
 
 angular.module('mailApp', [
 	'ngRoute',
@@ -17,7 +17,7 @@ angular.module('mailApp', [
 				templateUrl: 'partials/mail-list.html',
 				controller: 'MailCtrl'
 			}).
-			when('/mail/:mailId', {
+			when('/mail/:name', {
 				templateUrl: 'partials/mail-detail.html',
 				controller: 'mailDetailCtrl'
 			}).

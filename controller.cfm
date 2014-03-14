@@ -3,7 +3,7 @@
 	action = udf.getArgValue(url, 'action');
 
 	switch (action) {
-		case 'concat': {
+		case 'concat':
 			if (udf.getCurrentPage() eq udf.getTotalPage) {
 				writeOutput('');
 			} else {
@@ -11,25 +11,30 @@
 				concatLen = udf.getConcatLen(url);
 				startRow = udf.getCurrentPage() * maxrows - concatLen + 1;
 				qryMail = udf.getMails(startRow, concatLen);
-				writeOutput(serializeJSON(qryMail));
+				writeOutput( serializeJSON(qryMail) );
 			}
-		} break;
+		break;
 
 		case 'show':
-			include "pagelets/body.cfm"; break;
+			savecontent variable="mail" {
+				include "pagelets/mail.cfm";
+			}
 
-		case 'deleteList': {
+			writeOutput( serializeJSON( {mail: mail} ) );
+		break;
+
+		case 'deleteList':
 			try {
-				for(item in url.lstMail) {
+				for(item in udf.getArgValue(url, 'lstMail')) {
 					fileDelete(application.maildir & '/'  & URLDecode(item));
 				}
 			}
 			catch(any e) {
 				writeOutput(0);
 			}
-		} break;
+		break;
 
-		case 'deleteAll': {
+		case 'deleteAll':
 			qryFile = udf.getFileList();
 			try {
 				for(item in qryFile) {
@@ -40,9 +45,9 @@
 			catch(any e) {
 				writeOutput(0);
 			}
-		} break;
+		break;
 
-		case 'updateSettings': {
+		case 'updateSettings':
 			stcSettings = structNew();
 			stcSettings.perpage = udf.getArgValue(url, 'perpage');
 			stcSettings.maxpages = udf.getArgValue(url, 'maxpages');
@@ -52,22 +57,23 @@
 			} else {
 				writeOutput(0);
 			}
-		} break;
+		break;
 
-		case 'buildJson': {
+		case 'buildJson':
 			if (udf.buildJson()) {
 				writeOutput(1);
 			} else {
 				writeOutput(0);
 			}
-		} break;
+		break;
 
 		case 'list':
-		case 'toPage': {
+		case 'toPage':
 
-			switch(url.action){
+			switch(action){
 				case 'list': {
 					udf.setCurrentPage(1);
+					udf.setMode(udf.DB_MODE);
 					url.idx = udf.getCurrentPage();
 				} break;
 
@@ -80,9 +86,10 @@
 			startRow = (udf.getCurrentPage() - 1) * maxrows + 1;
 			qryMail = udf.getMails(startRow, maxrows);
 			writeOutput(serializeJSON(qryMail));
-		} break;
+		break;
 
 		default:
-			writeOutput(0); break;
+			writeOutput(0);
+		break;
 	}
 </cfscript>

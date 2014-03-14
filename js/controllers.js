@@ -34,6 +34,7 @@ var mailControllers = angular.module('mailControllers', [])
 				}
 			}
 
+			// toggle checkbox - use to mark delete
 			$scope.toggle = function() {
 				angular.forEach($scope.mails, function(mail) {
 					mail.deleteMark = !mail.deleteMark;
@@ -41,7 +42,9 @@ var mailControllers = angular.module('mailControllers', [])
 			}
 
 			$scope.toggleShow = function(e) {
-				var mail = this.mail;
+				var mail = this.mail,
+					src = e.srcElement || e.target,
+					elem = '';
 
 				if (!mail.show) {
 					angular.forEach($scope.mails, function(mail) {
@@ -52,10 +55,10 @@ var mailControllers = angular.module('mailControllers', [])
 				mail.show = !mail.show;
 
 				if (mail.show) {
-					var elem = angular.element(e.srcElement)[0];
+					elem = angular.element(src)[0];
 					if (!mail.BODY) {
-						$http.get('controller.cfm?action=show&mail=' + mail.NAME).success(function(data) {
-							mail.BODY = $sce.trustAsHtml(data);
+						Mail.show({mail: mail.NAME}, function(data) {
+							mail.BODY = $sce.trustAsHtml(data.MAIL);
 							$scope.scrollTo(elem);
 						})
 					} else {
@@ -66,7 +69,7 @@ var mailControllers = angular.module('mailControllers', [])
 			}
 
 			$scope.scrollTo = function(target, speed) {
-				var speed = speed || 200,
+				var speed = speed || 150,
 					start = window.scrollY,
 					step = (target.offsetTop - MAX_LEN_NAME + OFFSET_TOP - start) / speed;
 
@@ -260,15 +263,9 @@ var mailControllers = angular.module('mailControllers', [])
 	])
 	.controller('mailDetailCtrl', ['$scope', '$routeParams', 'Mail', '$sce', '$http',
 		function($scope, $routeParams, Mail, $sce, $http) {
-
-			// Mail.show({mail: $routeParams.mailId}, function(data) {
-			// 	console.log(data);
-			// 	$scope.mail = $sce.trustAsHtml(data);
-			// })
-
-			$http.get('controller.cfm?action=show&mail=' + $routeParams.mailId).success(function(data) {
-				$scope.mail = $sce.trustAsHtml(data);
+			Mail.show({mail: $routeParams.name}, function(data) {
+				console.log(data);
+				$scope.mail = $sce.trustAsHtml(data.MAIL);
 			})
-
 		}]
 	);

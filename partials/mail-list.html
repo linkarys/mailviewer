@@ -1,25 +1,12 @@
+<!-- navigation bar -->
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container-fluid">
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#">MViewer</a>
+			<a class="navbar-brand hidden-xs" href="#">MViewer</a>
 		</div>
 		<div class="navbar-collapse collapse in" style="height: auto;">
-
 			<form class="navbar-form navbar-right">
 				<input ng-model="query" class="form-control" id="filter-box" placeholder="Filter...">
-				<!-- <label for="sort-by" class="control-label">Sort by: </label>
-				<select ng-model="orderProp" class="form-control" id="sort-by">
-					<option value="SUBJECT">Subject</option>
-					<option value="FROM">Sender</option>
-					<option value="TO">To</option>
-					<option value="DATELASTMODIFIED">Newest</option>
-				</select> -->
 			</form>
 		</div>
 		<div>
@@ -39,29 +26,40 @@
 </div>
 
 <div class="row">
-	<div class="col-sm-3 col-md-2 mail-sidebar" ng-show="sidebarChecked">
+	<!-- side bar -->
+	<div class="col-xs-3 col-xs-2 mail-sidebar" ng-show="sidebarChecked">
 		<div class="sidebar-holder"></div>
 		<form class="form-horizontal settings" role="form">
 			<div class="form-group">
-				<label for="perpage" class="col-sm-4 control-label">Perpage</label>
-				<div class="col-sm-7">
-					<input type="number" class="form-control" id="perpage" min="1" max="100" ng-model="perpage">
+				<label for="perpage" class="col-xs-4 control-label">Perpage</label>
+				<div class="col-xs-7">
+					<input type="number" class="form-control" id="perpage" min="1" max="200" ng-model="perpage">
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="pages" class="col-sm-4 control-label">Pages</label>
-				<div class="col-sm-7">
-					<input type="number" class="form-control" ng-model="maxpages" min="1" max="15">
+				<label for="pages" class="col-xs-4 control-label">Pages</label>
+				<div class="col-xs-7">
+					<input type="number" class="form-control" name="pages" ng-model="maxpages" min="1" max="15">
 				</div>
 			</div>
+			<!-- mode -->
+			<!-- <div class="form-group">
+				<label class="col-xs-4 control-label">Mode</label>
+				<div class="col-xs-7">
+					<label class="radio inline"><input type="radio" name="mode" ng-model="mode">DB</label>
+					<label class="radio inline"><input type="radio" name="mode" ng-model="mode">JSON</label>
+				</div>
+			</div> -->
 			<div class="form-group">
-				<div class="col-sm-7 col-sm-offset-3">
+				<div class="col-xs-7 col-xs-offset-3">
 					<button type="submit" class="btn btn-default" ng-click="updateSettings()">Apply</button>
 				</div>
 			</div>
 			<label><span class="mail-sidectrl glyphicon" ng-class="sidebarChecked ? 'glyphicon-chevron-left' : 'glyphicon-chevron-right'"></span><input type="checkbox" ng-model="sidebarChecked" class="btn-sidectrl"></label>
 		</form>
 	</div>
+
+	<!-- mails -->
 	<div class="mail listing">
 		<ul class="list-unstyled">
 			<li ng-repeat="mail in mails | filter:query | orderBy:orderProp:reverse" class="mail-item" >
@@ -81,7 +79,7 @@
 	</div>
 </div>
 
-
+<!-- pagination -->
 <ul class="pager">
 	<li><a class="page {{page.actived}}" ng-repeat="page in pages" ng-click="toPage(page.idx)">{{page.label || page.idx}}</a></li>
 </ul>
