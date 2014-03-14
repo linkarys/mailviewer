@@ -18,7 +18,7 @@
 			</div>
 
 			<ol class="breadcrumb navbar-right">
-				<li>{{ currentPage }}</li>
+				<li><span class="badge" ng-class="newmails ? 'badge-info' : 'badge-hide'">{{ newmails }}</span> {{ currentPage }}</li>
 				<li>{{ totalPage }} - {{ mailcount }}</li>
 			</ol>
 		</div>

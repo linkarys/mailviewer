@@ -69,7 +69,7 @@
 
 		case 'checkNewMail':
 			qryMail = udf.checkNewMail();
-			writeOutput( serializeJSON(qryMail) );
+			writeOutput( serializeJSON({num: qryMail}) );
 		break;
 
 		case 'list':

@@ -110,18 +110,15 @@ component output="false" displayname=""  {
 		return directoryList(application.maildir, false, "query", "*.cfmail", "datelastmodified desc");
 	}
 
-	public any function checkNewMail() {
+	public string function checkNewMail() {
 		var qryFile = getFileList();
 		var qryService = new query(sql='SELECT count(*) as num FROM qryFile WHERE DateLastModified > #getDateLastModified()#', dbtype="query", qryFile = qryFile);
 		var qryResult = qryService.execute().getResult();
 
-		// writedump(qryResult);
-		// writeDump(getMails(1, qryResult.num));
-		// abort;
 		if (qryResult.RecordCount) {
-			return getMails(1, qryResult.num);
+			return qryResult.num;
 		}
-		return '';
+		return 0;
 	}
 
 	public string function getDateLastModified() {
@@ -146,7 +143,7 @@ component output="false" displayname=""  {
 			maxRows = qryfile.recordCount;
 		}
 
-		// setDateLastModified(qryfile.dateLastModified);
+		setDateLastModified(qryfile.dateLastModified);
 
 		for(i = startRow; (i lte qryFile.recordCount) and (i lt (startRow + maxRows)); i=i+1) {
 			mail = getMail(qryFile.name[i], false);

@@ -32,9 +32,7 @@ var mailControllers = angular.module('mailControllers', [])
 
 			$scope.checkNewMail = function() {
 				Mail.checkNewMail({}, function(data) {
-					if (data.DATA) {
-						$scope.fetchContent(data, false, true);
-					}
+					$scope.newmails = data.NUM;
 				})
 
 				setTimeout($scope.checkNewMail, 10000);
