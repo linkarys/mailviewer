@@ -110,14 +110,43 @@ component output="false" displayname=""  {
 		return directoryList(application.maildir, false, "query", "*.cfmail", "datelastmodified desc");
 	}
 
+	public any function checkNewMail() {
+		var qryFile = getFileList();
+		var qryService = new query(sql='SELECT count(*) as num FROM qryFile WHERE DateLastModified > #getDateLastModified()#', dbtype="query", qryFile = qryFile);
+		var qryResult = qryService.execute().getResult();
+
+		// writedump(qryResult);
+		// writeDump(getMails(1, qryResult.num));
+		// abort;
+		if (qryResult.RecordCount) {
+			return getMails(1, qryResult.num);
+		}
+		return '';
+	}
+
+	public string function getDateLastModified() {
+		if ( len(getArgValue(SESSION, 'dateLastModified')) ) {
+			return LSParseDateTime(SESSION.dateLastModified);
+		}
+		return now();
+	}
+
+	public string function setDateLastModified(date) {
+		if (isDate(arguments.date)) {
+			SESSION.dateLastModified = arguments.date;
+		}
+	}
+
 	public query function getMails(numeric startRow=1, numeric maxRows=this.MAX_PERPAGE) {
 		var qryFile = getFileList();
-		var qryResult = queryNew("name,subject,from,to,body,dateLastModified,currentPage,totalPage,maxpage,perpage", 'varchar,varchar,varchar,varchar,varchar,date,varchar,varchar,varchar,varchar');
+		var qryResult = queryNew("name,subject,from,to,body,dateLastModified,moreInfo", 'varchar,varchar,varchar,varchar,varchar,date,varchar');
 
 		if (variables.mode eq this.JSON_MODE) {
 			startRow = 1;
 			maxRows = qryfile.recordCount;
 		}
+
+		// setDateLastModified(qryfile.dateLastModified);
 
 		for(i = startRow; (i lte qryFile.recordCount) and (i lt (startRow + maxRows)); i=i+1) {
 			mail = getMail(qryFile.name[i], false);
@@ -128,10 +157,7 @@ component output="false" displayname=""  {
 			querySetCell(qryResult, "to", mail.to);
 			querySetCell(qryResult, "body", '');
 			querySetCell(qryResult, "dateLastModified", qryFile.dateLastModified[i]);
-			querySetCell(qryResult, "currentPage", getCurrentPage());
-			querySetCell(qryResult, "totalPage", getTotalPage());
-			querySetCell(qryResult, "perpage", getPerpage());
-			querySetCell(qryResult, "maxpage", getMaxpage());
+			querySetCell(qryResult, "moreInfo", "#getCurrentPage()#,#getTotalPage()#,#getPerpage()#,#getMaxpage()#,#qryfile.recordCount#");
 		}
 
 		return qryResult;

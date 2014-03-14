@@ -5,22 +5,39 @@ var mailControllers = angular.module('mailControllers', [])
 		function($scope, Mail, $location, $anchorScroll, $sce, $http) {
 			Mail.query({}, function(data) {
 				$scope.fetchContent(data);
+				$scope.checkNewMail();
 			});
 
 			// $scope.orderProp = 'DATELASTMODIFIED';
 
-			$scope.fetchContent = function(data, append) {
+			$scope.fetchContent = function(data, append, prepend) {
 				var mails = $scope.remap(data);
 
 				if (mails.length) {
-					$scope.mails = append ? $scope.mails.concat(mails) : mails;
+					if (append) {
+						$scope.mails = $scope.mails.concat(mails);
+					} else if (prepend) {
+						$scope.mails = mails.concat($scope.mails);
+					} else {
+						$scope.mails = mails;
+					}
 				}
 
-				$scope.updateDetails();
+				$scope.updateDetails(append);
 			}
 
 			$scope.refresh = function() {
 				location.reload();
+			}
+
+			$scope.checkNewMail = function() {
+				Mail.checkNewMail({}, function(data) {
+					if (data.DATA) {
+						$scope.fetchContent(data, false, true);
+					}
+				})
+
+				setTimeout($scope.checkNewMail, 10000);
 			}
 
 			$scope.updateSettings = function() {
@@ -83,19 +100,44 @@ var mailControllers = angular.module('mailControllers', [])
 				}
 			}
 
-			$scope.updateDetails = function() {
+			$scope.updateDetails = function(append) {
 				if ($scope.mails && $scope.mails.length) {
-					$scope.currentPage = $scope.getCurrentPage();
-					$scope.totalPage = $scope.getTotalPage();
-					$scope.maxpages = $scope.getMaxPages();
-					$scope.perpage = $scope.getPerpage();
-					$scope.pages = $scope.getPages();
-				}
+					var moreInfo =  $scope.mails[$scope.mails.length-1].MOREINFO.split(',');
 
+					/**
+					 * moreInfo {
+					 *	0 => currentPage,
+					 *	1 => totalPage,
+					 *	2 => perpage,
+					 *	3 => maxpage,
+					 *	4 => mailcount,
+					 * }
+					 * ----------------------------------------------------------------------
+					 */
+
+					$scope.currentPage = parseInt(moreInfo[0], 10);
+					$scope.totalPage = parseInt(moreInfo[1], 10);
+					$scope.perpage = parseInt(moreInfo[2], 10);
+					$scope.maxpages = parseInt(moreInfo[3], 10);
+					$scope.pages = $scope.getPages();
+
+					if (!append) $scope.mailcount = parseInt(moreInfo[4], 10);
+				}
 				// page focus
 				angular.forEach($scope.pages, function(page) {
 					page.actived = page.idx === $scope.currentPage ? 'actived' : '';
 				})
+			}
+
+			$scope.between = function(val, min, max) {
+				if (min && val < min) val = min;
+				if (max && val > max) val = max;
+				return val;
+			}
+
+			$scope.updateMailCount = function(num) {
+				$scope.mailcount -= num;
+				$scope.mailcount = $scope.between($scope.mailcount, 0);
 			}
 
 			$scope.fadeOut = function() {
@@ -105,7 +147,7 @@ var mailControllers = angular.module('mailControllers', [])
 
 			$scope.toPage = function(idx) {
 
-				if ($scope.getCurrentPage() === idx) return;
+				if ($scope.currentPage === idx) return;
 
 				$scope.fadeOut();
 
@@ -133,6 +175,7 @@ var mailControllers = angular.module('mailControllers', [])
 						$scope.fetchContent(data, true);
 						$scope.checkEmpty();
 						// $scope.pages = [];
+						$scope.updateMailCount(emailToDelete.length);
 					})
 				})
 			}
@@ -147,41 +190,11 @@ var mailControllers = angular.module('mailControllers', [])
 			}
 
 			$scope.checkEmpty = function() {
-				while (!$scope.mails.length) {
-					if ($scope.currentPage == 1) break;
-
+				if (!$scope.mails.length && $scope.currentPage > 1) {
 					Mail.toPage({idx: $scope.currentPage - 1}, function(data) {
-						$scope.fetchContent(data, true);
+						$scope.fetchContent(data, false);
 					})
 				}
-			}
-
-			$scope.getCurrentPage = function() {
-				if ($scope.mails.length) {
-					return $scope.mails[$scope.mails.length-1]['CURRENTPAGE'];
-				}
-				return 0;
-			}
-
-			$scope.getTotalPage = function() {
-				if ($scope.mails.length) {
-					return $scope.mails[$scope.mails.length-1]['TOTALPAGE'];
-				}
-				return 0;
-			}
-
-			$scope.getMaxPages = function() {
-				if ($scope.mails.length) {
-					return $scope.mails[$scope.mails.length-1]['MAXPAGE'];
-				}
-				return 0;
-			}
-
-			$scope.getPerpage = function() {
-				if ($scope.mails.length) {
-					return $scope.mails[$scope.mails.length-1]['PERPAGE'];
-				}
-				return 0;
 			}
 
 			$scope.getPages = function () {

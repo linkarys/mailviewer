@@ -67,6 +67,11 @@
 			}
 		break;
 
+		case 'checkNewMail':
+			qryMail = udf.checkNewMail();
+			writeOutput( serializeJSON(qryMail) );
+		break;
+
 		case 'list':
 		case 'toPage':
 

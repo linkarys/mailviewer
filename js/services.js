@@ -12,5 +12,6 @@ angular.module('mailServices', ['ngResource'])
 			deleteAll: {method:'GET', params:{action:'deleteAll'}, isArray: false},
 			deleteList: {method:'GET', params:{action:'deleteList'}, isArray: false},
 			updateSettings: {method:'GET', params:{action:'updateSettings'}, isArray: false},
+			checkNewMail: {method:'GET', params:{action:'checkNewMail'}, isArray: false},
 		});
 	}]);
