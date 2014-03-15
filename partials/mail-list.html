@@ -81,5 +81,5 @@
 
 <!-- pagination -->
 <ul class="pager">
-	<li><a class="page {{page.actived}}" ng-repeat="page in pages" ng-click="toPage(page.idx)">{{page.label || page.idx}}</a></li>
+	<li ng-repeat="page in pages" ng-click="toPage(page.idx)" class="page-item"><a class="page {{page.actived}}" >{{page.label || page.idx}}</a></li>
 </ul>
