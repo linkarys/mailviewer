@@ -154,15 +154,23 @@ var mailControllers = angular.module('mailControllers', [])
 				})
 			}
 
-			$scope.delete = function() {
+			$scope.delete = function(name) {
 				var emailToDelete = [],
 					newMails = [];
 
 				angular.forEach($scope.mails, function(mail) {
-					if (mail.deleteMark) {
-						emailToDelete.push(mail.NAME);
+					if (name) {
+						if (mail.NAME === name) {
+							emailToDelete.push(name);
+						} else {
+							newMails.push(mail);
+						}
 					} else {
-						newMails.push(mail);
+						if (mail.deleteMark) {
+							emailToDelete.push(mail.NAME);
+						} else {
+							newMails.push(mail);
+						}
 					}
 				})
 

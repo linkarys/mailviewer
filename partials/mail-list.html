@@ -64,7 +64,7 @@
 		<ul class="list-unstyled">
 			<li ng-repeat="mail in mails | filter:query | orderBy:orderProp:reverse" class="mail-item" >
 				<span ng-class="mail.show ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'" class="glyphicon action-btn unselectable" id="{{mail.$$hashKey}}" ng-click="toggleShow($event, $element)" scroll-if="mail.show"></span>
-				<span class="glyphicon glyphicon-remove-sign action-btn unselectable" ng-click="mail.deleteMark=true; delete()"></span>
+				<span class="glyphicon glyphicon-remove-sign action-btn unselectable" ng-click="delete(mail.NAME)"></span>
 				<input type="checkbox" data-ng-model="mail.deleteMark" ng-init="mail.deltedMark=false" class="action-btn delete-marker">
 				<span class="subject-detail">
 					<span ng-click="toggleShow($event, $element)" class="title">{{mail.SUBJECT | formatName}}</span>
