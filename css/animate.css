@@ -35,12 +35,22 @@
 
 .mail-item.ng-enter.ng-enter-active,
 .mail-item.ng-leave {
+	-webkit-transform: rotateX(0deg) translatez(30px);
+	-moz-transform: rotateX(0deg) translatez(30px);
+	-ms-transform: rotateX(0deg) translatez(30px);
+	-o-transform: rotateX(0deg) translatez(30px);
+	transform: rotateX(0deg) translatez(30px);
 	opacity: 1;
 	height: 30px;
 }
 
 .mail-item.ng-leave.ng-leave-active,
 .mail-item.ng-enter {
+	-webkit-transform: rotateX(-180deg) translatez(30px);
+	-moz-transform: rotateX(-180deg) translatez(30px);
+	-ms-transform: rotateX(-180deg) translatez(30px);
+	-o-transform: rotateX(-180deg) translatez(30px);
+	transform: rotateX(-180deg) translatez(30px);
 	opacity: 0;
 	height: 0px;
 }
