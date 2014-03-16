@@ -1,7 +1,7 @@
 Mail Viewer
 ==========
 
-Coldfusion plugin use to view system emails.
+Coldfusion plugin, use to view system emails.
 
 This plugin get idea from spoolmail, thanks to Phillip Duba and Raymond Camden.
 
