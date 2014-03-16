@@ -3,22 +3,24 @@ Mail Viewer
 
 Coldfusion plugin use to view system emails.
 
-This plugin get idea from spoolmail, Thanks Phillip Duba and Raymond Camden.
+This plugin get idea from spoolmail, thanks to Phillip Duba and Raymond Camden.
 
-I should special thanks xinju, thanks for all the suggestion. Some of them are really great, and also thanks for your QA.
+I should special thanks to [Xinju](https://github.com/xinju), thanks for all the suggestion. Some of them are really great, and also thanks for your QA.
 
-Quit Start
+Installation
 ==========
-* Go to your coldfusion administrator folder
+* Go to your coldfusion administrator folder (/opt/coldfusion10/cfusion\wwwroot/CFIDE/administrator for me)
 * Edit custommenu.xml, and add the new menuitem to Custom Node
 ```xml
 <submenu label="Custom">
 	<menuitem href="mailviewer/index.cfm" target="content">Mail Viewer</menuitem>
 </submenu>
 ```
-* git clone https://github.com/linkarys/mailviewer.git
+* Clone
+```git
+git clone https://github.com/linkarys/mailviewer.git
+```
 
-
-More Info
+Screenshot
 ========
-Please refer to https://github.com/linkarys/mailviewer/wiki
+[![Screenshot](http://thumbsnap.com/s/rSvQFIUR.png)](http://thumbsnap.com/s/rSvQFIUR.png)
