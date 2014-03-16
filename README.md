@@ -28,4 +28,4 @@ git clone https://github.com/linkarys/mailviewer.git
 
 Screenshot
 ========
-[![Screenshot](http://thumbsnap.com/s/rSvQFIUR.png)](http://thumbsnap.com/s/rSvQFIUR.png)
+[![Screenshot](http://thumbsnap.com/s/rSvQFIUR.png)](http://thumbsnap.com/i/rSvQFIUR.png?0316)
