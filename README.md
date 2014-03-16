@@ -10,6 +10,13 @@ I should special thanks xinju, thanks for all the suggestion. Some of them are r
 Quit Start
 ==========
 * Go to your coldfusion administrator folder
+* Edit custommenu.xml, and add following line to Custom Node
+```xml
+<submenu label="Custom">
+	<menuitem href="mailviewer/index.cfm" target="content">Mail Viewer</menuitem>
+</submenu>
+
+* git clone https://github.com/linkarys/mailviewer.git
 
 
 More Info
