@@ -32,5 +32,11 @@ Filter out emails if the following fields doesn't match the filter content:
 - mail to
 - mail body (if already been loaded)
 
+## Existing issues
+- The new email indicator does not always work
+- It unable to display attachment
+- Not work with emails which type are multipart
+
+
 ## Screenshot
 [![Screenshot](http://thumbsnap.com/s/rSvQFIUR.png)](http://thumbsnap.com/i/rSvQFIUR.png?0316)
