@@ -32,6 +32,9 @@ Filter out emails if the following fields doesn't match the filter content:
 - mail to
 - mail body (if already been loaded)
 
+## Branches
+Except the master, all other branches just change the animation. You cound find them at [anguar animate simples] (http://www.nganimate.org/angularjs/ng-repeat/skew-transform)
+
 ## Existing issues
 - The new email indicator does not always work
 - It unable to display attachment
