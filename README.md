@@ -8,7 +8,7 @@ This plugin get idea from spoolmail, thanks to Phillip Duba and Raymond Camden.
 I should special thanks to [Xinju](https://github.com/xinju), thanks for all the suggestion. Some of them are really great, and also thanks for your QA.
 
 ## Require
-- Chrome or Firefox browser (Not works well with IE)
+- Chrome or Firefox (Not works well with IE)
 - Coldfusion 10.0 or above (Not works with Coldfusion 8, not sure whether it works with Coldfusin 9)
 
 ## Installation
