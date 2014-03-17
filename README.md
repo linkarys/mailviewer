@@ -5,7 +5,7 @@ Coldfusion plugin, use to view system emails.
 
 This plugin get idea from spoolmail, thanks to Phillip Duba and Raymond Camden.
 
-I should special thanks to [Xinju](https://github.com/xinju), thanks for all the suggestion. Some of them are really great, and also thanks for your QA.
+I should special thanks to [Xinju](https://github.com/xinju), thanks for all the suggestions. Some of them are really great, and also thanks for your QA.
 
 ## Require
 - Chrome or Firefox (Not works well with IE)
