@@ -42,4 +42,5 @@ Except the master, all other branches just change the animation. You cound find 
 
 
 ## Screenshot
-[![Screenshot](http://thumbsnap.com/s/rSvQFIUR.png)](http://thumbsnap.com/i/rSvQFIUR.png?0316)
+[![Screenshot](https://raw.githubusercontent.com/linkarys/img/master/MailViewer/main.png)](https://raw.githubusercontent.com/linkarys/img/master/MailViewer/main.png)
+
